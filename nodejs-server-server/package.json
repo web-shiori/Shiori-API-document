@@ -1,0 +1,20 @@
+{
+  "name": "techtrain-mission-game-api",
+  "version": "1.0.0",
+  "description": "TechTrain MISSION ゲームAPI入門仕様  まずはこのAPI仕様に沿って機能を実装してみましょう。    この画面の各APIの「Try it out」->「Execute」を利用することで  ローカル環境で起動中のAPIにAPIリクエストをすることができます。",
+  "main": "index.js",
+  "scripts": {
+	"prestart": "npm install",
+	"start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "swagger-tools": "0.10.1"
+  }
+}
