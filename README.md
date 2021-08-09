@@ -1,5 +1,6 @@
 # Shiori-API-document
-- APIドキュメントリンク: https://web-shiori-api-document.herokuapp.com/
+- APIドキュメント: https://web-shiori-api-document.herokuapp.com/
+- Herokuのダッシュボード: https://dashboard.heroku.com/apps/web-shiori-api-document
 - Swagger Editor: https://editor.swagger.io/
 - API設計v1: https://web-shiori.kibe.la/notes/2
 
