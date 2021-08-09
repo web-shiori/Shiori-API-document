@@ -1,30 +1,26 @@
 swagger: "2.0"
 info:
-  description: "TechTrain MISSION ゲームAPI入門仕様\n
-  まずはこのAPI仕様に沿って機能を実装してみましょう。\n
-  \n
-  この画面の各APIの「Try it out」->「Execute」を利用することで\n
-  ローカル環境で起動中のAPIにAPIリクエストをすることができます。"
+  description: "Web-Shiori API document"
   version: "1.0.0"
-  title: "TechTrain MISSION Game API"
-host: "localhost:8080"
+  title: "Web-Shiori API"
+host: "web-shiori-api-document.herokuapp.com"
 tags:
-  - name: "user"
-    description: "ユーザ関連API"
-  - name: "gacha"
-    description: "ガチャ関連API"
-  - name: "character"
-    description: "キャラクター関連API"
+  - name: "auth"
+    description: "認証関連API"
+  - name: "content"
+    description: "コンテンツ関連API"
+  - name: "folder"
+    description: "フォルダ関連API"
 schemes:
-  - "http"
+  - "https"
 paths:
-  /user/create:
+  /v1/auth:
     post:
       tags:
-        - "user"
-      summary: "ユーザ情報作成API"
-      description: "ユーザ情報を作成します。\n
-      ユーザの名前情報をリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。"
+        - "auth"
+      summary: "会員登録用API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
       consumes:
         - "application/json"
       produces:
@@ -35,18 +31,143 @@ paths:
           description: "Request Body"
           required: true
           schema:
-            $ref: "#/definitions/UserCreateRequest"
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+
+  /v1/auth/login:
+    post:
+      tags:
+        - "auth"
+      summary: "ログイン用API"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
       responses:
         200:
           "description": "A successful response."
           "schema":
-            "$ref": "#/definitions/UserCreateResponse"
-
-  /user/get:
+            "$ref": "#/definitions/UserGetResponse"
+  
+  /v1/auth/login/google:
     get:
       tags:
-        - "user"
-      summary: "ユーザ情報取得API"
+        - "auth"
+      summary: "Googleログイン用API"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/UserGetResponse"
+            
+  /v1/auth/callback/google:
+    get:
+      tags:
+        - "auth"
+      summary: "Googleの認証が終わった際にリダイレクトされてくるAPI"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/UserGetResponse"
+            
+  /v1/auth/login/twitter:
+    get:
+      tags:
+        - "auth"
+      summary: "Twitterログイン用API"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/UserGetResponse"
+            
+  /v1/auth/callback/twitter:
+    get:
+      tags:
+        - "auth"
+      summary: "Twitterの認証が終わった際にリダイレクトされてくるAPI"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/UserGetResponse"
+  
+  /v1/auth/login/github:
+    get:
+      tags:
+        - "auth"
+      summary: "Githubログイン用API"
       description: "ユーザ情報を取得します。\n
       ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
       consumes:
@@ -65,13 +186,13 @@ paths:
           "schema":
             "$ref": "#/definitions/UserGetResponse"
 
-  /user/update:
-    put:
+  /v1/auth/callback/github:
+    get:
       tags:
-        - "user"
-      summary: "ユーザ情報更新API"
-      description: "ユーザ情報の更新をします。\n
-      初期実装では名前の更新を行います。"
+        - "auth"
+      summary: "Githubの認証が終わった際にリダイレクトされてくるAPI"
+      description: "ユーザ情報を取得します。\n
+      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
       consumes:
         - "application/json"
       produces:
@@ -82,21 +203,63 @@ paths:
           description: "認証トークン"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/UserUpdateRequest"
       responses:
         200:
           "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/UserGetResponse"
+            
+  /v1/content:
+    get:
+      tags:
+        - "content"
+      summary: "コンテンツ一覧取得API"
+      description: "コンテンツ一覧を取得します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置"
+          required: false
+          type: "integer"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentListResponse"
 
-  /gacha/draw:
     post:
       tags:
-        - "gacha"
-      summary: "ガチャ実行API"
+        - "content"
+      summary: "コンテンツ保存API"
       description: "ガチャを引いてキャラクターを取得する処理を実装します。\n
       獲得したキャラクターはユーザ所持キャラクターテーブルへ保存します。\n
       同じ種類のキャラクターでもユーザは複数所持することができます。\n
@@ -124,11 +287,11 @@ paths:
           "schema":
             "$ref": "#/definitions/GachaDrawResponse"
 
-  /character/list:
-    get:
+  /v1/content/:content_id:
+    put:
       tags:
-        - "character"
-      summary: "ユーザ所持キャラクター一覧取得API"
+        - "content"
+      summary: "コンテンツ情報更新API"
       description: "ユーザが所持しているキャラクター一覧情報を取得します。"
       consumes:
         - "application/json"
@@ -145,20 +308,500 @@ paths:
           "description": "A successful response."
           "schema":
             "$ref": "#/definitions/CharacterListResponse"
-
+    
+    delete:
+      tags:
+        - "content"
+      summary: "コンテンツ削除API"
+      description: "ユーザが所持しているキャラクター一覧情報を取得します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "x-token"
+          description: "認証トークン"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/CharacterListResponse"
+  
+  /v1/likes:
+    get:
+      tags:
+        - "content"
+      summary: "お気に入りコンテンツ一覧取得API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+  
+  /v1/content/:content_id/like:
+    post:
+      tags:
+        - "content"
+      summary: "お気に入り登録API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+            
+    delete:
+      tags:
+        - "content"
+      summary: "お気に入り解除API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+  
+  /v1/folder:
+    get:
+      tags:
+        - "folder"
+      summary: "フォルダ一覧取得API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+    post:
+      tags:
+        - "folder"
+      summary: "フォルダ作成API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+            
+  /v1/folder/:folder_id:
+    put:
+      tags:
+        - "folder"
+      summary: "フォルダ情報更新API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+    
+    delete:
+      tags:
+        - "folder"
+      summary: "フォルダ削除API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+            
+  /v1/folder/:folder_id/content:
+    get:
+      tags:
+        - "folder"
+      summary: "フォルダ内コンテンツ一覧取得API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+            
+  /v1/folder/:folder_id/content/:content_id:
+    post:
+      tags:
+        - "folder"
+      summary: "フォルダにコンテンツを追加するAPI"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+    
+    delete:
+      tags:
+        - "folder"
+      summary: "フォルダからコンテンツを削除するAPI"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+            
 definitions:
-  UserCreateRequest:
+  AuthRequest:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        description: "メールアドレス"
+      password:
+        type: "string"
+        description: "パスワード"
+      password_confirmation:
+        type: "string"
+        description: "パスワード(確認用)"
+  AuthResponse:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        description: "status"
+      data:
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+            description: "ユーザid"
+            example: 126
+          provider:
+            type: "string"
+            description: "provider"
+            example: "email"
+          uid:
+            type: "string"
+            description: "uid"
+            example: "example@example.com"
+          allow_password_change:
+            type: "boolean"
+            description: "allow_password_change"
+            example: false
+          email:
+            type: "string"
+            description: "email"
+            example: "example2@example.com"
+          created_at:
+            type: "string"
+            description: "created_at"
+            example: "2019-05-12T20:48:24.000+09:00"
+          updated_at:
+            type: "string"
+            description: "updated_at"
+            example: "2019-05-12T20:48:24.000+09:00"
+  LoginRequest:
     type: "object"
     properties:
       name:
         type: "string"
         description: "ユーザ名"
-  UserCreateResponse:
+  LoginResponse:
     type: "object"
     properties:
-      token:
+      name:
         type: "string"
-        description: "クライアント側で保存するトークン"
+        description: "ユーザ名"
+  ContentListResponse:
+    type: "object"
+    properties:
+      meta:
+        type: "object"
+        properties:
+          id:
+            type: "string"
+            description: "ユーザ名"
+      data:
+        type: "object"
+        properties:
+          id:
+            type: "string"
+            description: "ユーザ名"
+  ContentCreateRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  ContentCreateResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  ContentUpdateRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  ContentUpdateResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  ContentDeleteRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  ContentDeleteResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  LikedContentListRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  LikedContentListResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  LikedRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
+  LikedResponse:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "ユーザ名"
   UserGetResponse:
     type: "object"
     properties:
@@ -211,4 +854,4 @@ definitions:
         description: "キャラクターID"
       name:
         type: "string"
-        d
+        description: "キャラクター名"
