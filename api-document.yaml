@@ -211,4 +211,4 @@ definitions:
         description: "キャラクターID"
       name:
         type: "string"
-        description: "キャラクター名"
+        d
