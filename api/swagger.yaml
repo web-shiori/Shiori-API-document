@@ -4,9 +4,8 @@ info:
   description: "Web-Shiori API document"
   version: "1.0.0"
   title: "Web-Shiori API"
-  termsOfService: "http://swagger.io/terms/"
   contact:
-    email: "apiteam@swagger.io"
+    email: "shiori.web.forsafari@gmail.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
