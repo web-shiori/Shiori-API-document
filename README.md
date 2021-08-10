@@ -4,7 +4,7 @@
 - API設計v1: https://web-shiori.kibe.la/notes/2
 
 ## デプロイ手順
-- swagger editorで編集
+- [SwaggerHub](https://app.swaggerhub.com/apis/Web-Shiori/Web-Shiori/1.0.0)で編集
 - Swagger Editor 上で、 Generate Server > nodejs-server を選択
 - サーバーサイドコードのzip ファイルでダウンロードできるので、ダウンロード後に解凍する
 - 修正
@@ -12,7 +12,6 @@
 - var serverPort = 8080;
 + var serverPort = process.env.PORT || 8080;
 ```
-
 - package.jsonをルートに配置
 - mainブランチにプッシュすると自動でデプロイされます。
 
