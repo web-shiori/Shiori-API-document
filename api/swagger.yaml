@@ -4,7 +4,14 @@ info:
   description: "Web-Shiori API document"
   version: "1.0.0"
   title: "Web-Shiori API"
-host: "web-shiori-api-document.herokuapp.com"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/v1"
 tags:
 - name: "auth"
   description: "認証関連API"
@@ -14,15 +21,16 @@ tags:
   description: "フォルダ関連API"
 schemes:
 - "https"
+- "http"
 paths:
-  /v1/auth:
+  /auth:
     post:
       tags:
       - "auth"
       summary: "会員登録用API"
       description: "会員登録します。\n email, password, password_confirmationをリクエストで受け取り、ユ\
         ーザと認証用のトークンを生成します。"
-      operationId: "v1AuthPOST"
+      operationId: "authPOST"
       consumes:
       - "application/json"
       produces:
@@ -91,6 +99,7 @@ definitions:
     properties:
       id:
         type: "integer"
+        format: "int64"
         example: 126
         description: "ユーザid"
       provider:
@@ -111,10 +120,12 @@ definitions:
         description: "email"
       created_at:
         type: "string"
+        format: "date-time"
         example: "2019-05-12T20:48:24.000+09:00"
         description: "created_at"
       updated_at:
         type: "string"
+        format: "date-time"
         example: "2019-05-12T20:48:24.000+09:00"
         description: "updated_at"
     example:

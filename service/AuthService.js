@@ -8,7 +8,7 @@
  * body AuthRequest Request Body
  * returns AuthResponse
  **/
-exports.v1AuthPOST = function(body) {
+exports.authPOST = function(body) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {"empty": false};

@@ -3,9 +3,9 @@
 var utils = require('../utils/writer.js');
 var Auth = require('../service/AuthService');
 
-module.exports.v1AuthPOST = function v1AuthPOST (req, res, next) {
+module.exports.authPOST = function authPOST (req, res, next) {
   var body = req.swagger.params['body'].value;
-  Auth.v1AuthPOST(body)
+  Auth.authPOST(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })
