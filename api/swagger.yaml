@@ -34,42 +34,15 @@ paths:
       produces:
       - "application/json"
       - "application/xml"
-      parameters:
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/AuthRequest"
+      parameters: []
       responses:
         "200":
           description: "A successful response."
           schema:
-            $ref: "#/definitions/AuthResponse"
+            type: "object"
+            properties:
+              status:
+                type: "string"
+                example: "success"
+                description: "status"
       x-swagger-router-controller: "Auth"
-definitions:
-  AuthRequest:
-    type: "object"
-    properties:
-      email:
-        type: "string"
-        description: "メールアドレス"
-      password:
-        type: "string"
-        description: "パスワード"
-      password_confirmation:
-        type: "string"
-        description: "パスワード(確認用)"
-    example:
-      password: "password"
-      password_confirmation: "password_confirmation"
-      email: "email"
-  AuthResponse:
-    type: "object"
-    properties:
-      status:
-        type: "string"
-        example: "success"
-        description: "status"
-    example:
-      status: "success"
