@@ -3,6 +3,12 @@ info:
   description: "Web-Shiori API document"
   version: "1.0.0"
   title: "Web-Shiori API"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "web-shiori-api-document.herokuapp.com"
 tags:
   - name: "auth"
@@ -12,6 +18,7 @@ tags:
   - name: "folder"
     description: "フォルダ関連API"
 schemes:
+  - "http"
   - "https"
 paths:
   /v1/auth:
@@ -232,11 +239,13 @@ paths:
           description: "取得数。デフォルトは50"
           required: false
           type: "integer"
+          format: "int64"
         - in: "query"
           name: "offset"
           description: "取得位置。デフォルトは0"
           required: false
           type: "integer"
+          format: "int64"
       responses:
         200:
           "description": "A successful response."
@@ -391,11 +400,13 @@ paths:
           description: "取得数。デフォルトは50"
           required: false
           type: "integer"
+          format: "int64"
         - in: "query"
           name: "offset"
           description: "取得位置。デフォルトは0"
           required: false
           type: "integer"
+          format: "int64"
       responses:
         200:
           "description": "A successful response."
@@ -654,11 +665,13 @@ paths:
           description: "取得数。デフォルトは50"
           required: false
           type: "integer"
+          format: "int64"
         - in: "query"
           name: "offset"
           description: "取得位置。デフォルトは0"
           required: false
           type: "integer"
+          format: "int64"
       responses:
         200:
           "description": "A successful response."
@@ -805,22 +818,27 @@ definitions:
         example: null
       scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "scroll_position_x"
         example: 0
       scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "scroll_position_y"
         example: 200
       max_scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_x"
         example: 0
       max_scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_y"
         example: 10000
       video_playback_position:
         type: "integer"
+        format: "int64"
         description: "video_playback_position"
         example: 500
       specified_text:
@@ -849,6 +867,7 @@ definitions:
     properties:
       content_id:
         type: "integer"
+        format: "int64"
         description: "コンテンツid"
         example: 126
       title:
@@ -865,22 +884,27 @@ definitions:
         example: null
       scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "scroll_position_x"
         example: 0
       scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "scroll_position_y"
         example: 200
       max_scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_x"
         example: 0
       max_scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_y"
         example: 10000
       video_playback_position:
         type: "integer"
+        format: "int64"
         description: "video_playback_position"
         example: 500
       specified_text:
@@ -981,10 +1005,12 @@ definitions:
         example: ""
       limit:
         type: "integer"
+        format: "int64"
         description: "取得数"
         example: 50
       offset:
         type: "integer"
+        format: "int64"
         description: "取得位置(相対位置)"
         example: 0
       hasNext:
@@ -996,6 +1022,7 @@ definitions:
     properties:
       id:
         type: "integer"
+        format: "int64"
         description: "ユーザid"
         example: 126
       provider:
@@ -1016,10 +1043,12 @@ definitions:
         example: "example2@example.com"
       created_at:
         type: "string"
+        format: "date-time"
         description: "created_at"
         example: "2019-05-12T20:48:24.000+09:00"
       updated_at:
         type: "string"
+        format: "date-time"
         description: "updated_at"
         example: "2019-05-12T20:48:24.000+09:00"
   Content:
@@ -1027,6 +1056,7 @@ definitions:
     properties:
       content_id:
         type: "integer"
+        format: "int64"
         description: "コンテンツid"
         example: 126
       type:
@@ -1051,22 +1081,27 @@ definitions:
         example: null
       scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "scroll_position_x"
         example: 0
       scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "scroll_position_y"
         example: 200
       max_scroll_position_x:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_x"
         example: 0
       max_scroll_position_y:
         type: "integer"
+        format: "int64"
         description: "max_scroll_position_y"
         example: 10000
       video_playback_position:
         type: "integer"
+        format: "int64"
         description: "video_playback_position"
         example: 500
       specified_text:
@@ -1095,14 +1130,17 @@ definitions:
         example: false
       deleted_at:
         type: "string"
+        format: "date-time"
         description: "deleted_at"
         example: null
       created_at:
         type: "string"
+        format: "date-time"
         description: "created_at"
         example: "2019-05-12T20:48:24.000+09:00"
       updated_at:
         type: "string"
+        format: "date-time"
         description: "updated_at"
         example: "2019-05-12T20:48:24.000+09:00"
   Folder:
@@ -1110,6 +1148,7 @@ definitions:
     properties:
       folder_id:
         type: "integer"
+        format: "int64"
         description: "フォルダid"
         example: 1
       name:
@@ -1118,5 +1157,6 @@ definitions:
         example: "動画"
       content_count:
         type: "integer"
+        format: "int64"
         description: "フォルダに含まれているコンテンツの数"
         example: 10
