@@ -9,7 +9,8 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "web-shiori-api-document.herokuapp.com"
+host: "virtserver.swaggerhub.com"
+basePath: "/Web-Shiori/Web-Shiori/1.0.0"
 tags:
 - name: "auth"
   description: "認証関連API"
@@ -18,8 +19,8 @@ tags:
 - name: "folder"
   description: "フォルダ関連API"
 schemes:
-- "http"
 - "https"
+- "http"
 paths:
   /v1/auth:
     post:
@@ -875,7 +876,6 @@ definitions:
         description: "url"
       file:
         type: "string"
-        example: "null"
         description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
       scroll_position_x:
         type: "integer"
@@ -904,32 +904,28 @@ definitions:
         description: "video_playback_position"
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
     example:
       video_playback_position: 500
-      specified_dom_id: "null"
-      file: "null"
-      specified_dom_class: "null"
+      specified_dom_id: "specified_dom_id"
+      file: "file"
+      specified_dom_class: "specified_dom_class"
       max_scroll_position_y: 10000
-      specified_text: "null"
+      specified_text: "specified_text"
       scroll_position_y: 200
       scroll_position_x: 0
       max_scroll_position_x: 0
       title: "日向坂で会いましょう"
-      specified_dom_tag: "null"
+      specified_dom_tag: "specified_dom_tag"
       url: "https://hinatasaka.com"
   ContentCreateResponse:
     type: "object"
@@ -938,8 +934,8 @@ definitions:
         $ref: "#/definitions/Content"
     example:
       data:
-        file_url: "null"
-        specified_dom_id: "null"
+        file_url: "file_url"
+        specified_dom_id: "specified_dom_id"
         content_id: 126
         max_scroll_position_y: 10000
         created_at: "2019-05-12T20:48:24.000+09:00"
@@ -948,16 +944,16 @@ definitions:
         max_scroll_position_x: 0
         type: "web"
         title: "日向坂で会いましょう"
-        deleted_at: "null"
+        deleted_at: "2000-01-23T04:56:07.000+00:00"
         url: "https://hinatasaka.com"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
         video_playback_position: 500
-        specified_dom_class: "null"
+        specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
-        specified_text: "null"
+        specified_text: "specified_text"
         delete_flag: false
-        specified_dom_tag: "null"
+        specified_dom_tag: "specified_dom_tag"
   ContentUpdateRequest:
     type: "object"
     properties:
@@ -976,7 +972,6 @@ definitions:
         description: "url"
       file:
         type: "string"
-        example: "null"
         description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
       scroll_position_x:
         type: "integer"
@@ -1005,22 +1000,18 @@ definitions:
         description: "video_playback_position"
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
     example:
-      specified_dom_id: "null"
+      specified_dom_id: "specified_dom_id"
       content_id: 126
       max_scroll_position_y: 10000
       scroll_position_y: 200
@@ -1029,10 +1020,10 @@ definitions:
       title: "日向坂で会いましょう"
       url: "https://hinatasaka.com"
       video_playback_position: 500
-      file: "null"
-      specified_dom_class: "null"
-      specified_text: "null"
-      specified_dom_tag: "null"
+      file: "file"
+      specified_dom_class: "specified_dom_class"
+      specified_text: "specified_text"
+      specified_dom_tag: "specified_dom_tag"
   ContentUpdateResponse:
     type: "object"
     properties:
@@ -1040,8 +1031,8 @@ definitions:
         $ref: "#/definitions/Content"
     example:
       data:
-        file_url: "null"
-        specified_dom_id: "null"
+        file_url: "file_url"
+        specified_dom_id: "specified_dom_id"
         content_id: 126
         max_scroll_position_y: 10000
         created_at: "2019-05-12T20:48:24.000+09:00"
@@ -1050,16 +1041,16 @@ definitions:
         max_scroll_position_x: 0
         type: "web"
         title: "日向坂で会いましょう"
-        deleted_at: "null"
+        deleted_at: "2000-01-23T04:56:07.000+00:00"
         url: "https://hinatasaka.com"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
         video_playback_position: 500
-        specified_dom_class: "null"
+        specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
-        specified_text: "null"
+        specified_text: "specified_text"
         delete_flag: false
-        specified_dom_tag: "null"
+        specified_dom_tag: "specified_dom_tag"
   LikedContentListResponse:
     type: "object"
     properties:
@@ -1254,7 +1245,6 @@ definitions:
         description: "sharing_url"
       file_url:
         type: "string"
-        example: "null"
         description: "file_url"
       scroll_position_x:
         type: "integer"
@@ -1283,19 +1273,15 @@ definitions:
         description: "video_playback_position"
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
       liked:
         type: "boolean"
@@ -1308,7 +1294,6 @@ definitions:
       deleted_at:
         type: "string"
         format: "date-time"
-        example: "null"
         description: "deleted_at"
       created_at:
         type: "string"
@@ -1321,8 +1306,8 @@ definitions:
         example: "2019-05-12T20:48:24.000+09:00"
         description: "updated_at"
     example:
-      file_url: "null"
-      specified_dom_id: "null"
+      file_url: "file_url"
+      specified_dom_id: "specified_dom_id"
       content_id: 126
       max_scroll_position_y: 10000
       created_at: "2019-05-12T20:48:24.000+09:00"
@@ -1331,16 +1316,16 @@ definitions:
       max_scroll_position_x: 0
       type: "web"
       title: "日向坂で会いましょう"
-      deleted_at: "null"
+      deleted_at: "2000-01-23T04:56:07.000+00:00"
       url: "https://hinatasaka.com"
       sharing_url: "https://universal_link.hinatasaka.com"
       liked: true
       video_playback_position: 500
-      specified_dom_class: "null"
+      specified_dom_class: "specified_dom_class"
       updated_at: "2019-05-12T20:48:24.000+09:00"
-      specified_text: "null"
+      specified_text: "specified_text"
       delete_flag: false
-      specified_dom_tag: "null"
+      specified_dom_tag: "specified_dom_tag"
   Folder:
     type: "object"
     properties:
