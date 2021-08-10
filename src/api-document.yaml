@@ -1,0 +1,1122 @@
+swagger: "2.0"
+info:
+  description: "Web-Shiori API document"
+  version: "1.0.0"
+  title: "Web-Shiori API"
+host: "web-shiori-api-document.herokuapp.com"
+tags:
+  - name: "auth"
+    description: "認証関連API"
+  - name: "content"
+    description: "コンテンツ関連API"
+  - name: "folder"
+    description: "フォルダ関連API"
+schemes:
+  - "https"
+paths:
+  /v1/auth:
+    post:
+      tags:
+        - "auth"
+      summary: "会員登録用API"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+
+  /v1/auth/login:
+    post:
+      tags:
+        - "auth"
+      summary: "ログイン用API"
+      description: "ログインします。\n
+      email, passwordをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+          "schema":
+            "$ref": "#/definitions/LoginResponse"
+  
+  /v1/auth/login/google:
+    get:
+      tags:
+        - "auth"
+      summary: "Googleログイン用API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+              
+  /v1/auth/callback/google:
+    get:
+      tags:
+        - "auth"
+      summary: "Googleの認証が終わった際にリダイレクトされてくるAPI"
+      description: "クライアントが直接叩くことはない"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+            
+  /v1/auth/login/twitter:
+    get:
+      tags:
+        - "auth"
+      summary: "Twitterログイン用API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+            
+  /v1/auth/callback/twitter:
+    get:
+      tags:
+        - "auth"
+      summary: "Twitterの認証が終わった際にリダイレクトされてくるAPI"
+      description: "クライアントが直接叩くことはない"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+  
+  /v1/auth/login/github:
+    get:
+      tags:
+        - "auth"
+      summary: "Githubログイン用API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+
+  /v1/auth/callback/github:
+    get:
+      tags:
+        - "auth"
+      summary: "Githubの認証が終わった際にリダイレクトされてくるAPI"
+      description: "クライアントが直接叩くことはない"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          "description": "A successful response."
+            
+  /v1/content:
+    get:
+      tags:
+        - "content"
+      summary: "コンテンツ一覧取得API"
+      description: "コンテンツ一覧を取得します。"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentListResponse"
+
+    post:
+      tags:
+        - "content"
+      summary: "コンテンツ保存API"
+      description: "コンテンツ保存API"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/ContentCreateRequest"
+      responses:
+        201:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentCreateResponse"
+
+  /v1/content/{content_id}:
+    put:
+      tags:
+        - "content"
+      summary: "コンテンツ情報更新API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/ContentUpdateRequest"
+      responses:
+        204:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentUpdateResponse"
+    
+    delete:
+      tags:
+        - "content"
+      summary: "コンテンツ削除API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        204:
+          "description": "A successful response."
+  
+  /v1/likes:
+    get:
+      tags:
+        - "content"
+      summary: "お気に入りコンテンツ一覧取得API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/LikedContentListResponse"
+  
+  /v1/content/{content_id}/like:
+    post:
+      tags:
+        - "content"
+      summary: "お気に入り登録API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/LikedResponse"
+            
+    delete:
+      tags:
+        - "content"
+      summary: "お気に入り解除API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        204:
+          "description": "A successful response."
+  
+  /v1/folder:
+    get:
+      tags:
+        - "folder"
+      summary: "フォルダ一覧取得API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderListResponse"
+    post:
+      tags:
+        - "folder"
+      summary: "フォルダ作成API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/FolderCreateRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderCreateResponse"
+            
+  /v1/folder/{folder_id}:
+    put:
+      tags:
+        - "folder"
+      summary: "フォルダ情報更新API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/FolderUpdateRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderUpdateResponse"
+    
+    delete:
+      tags:
+        - "folder"
+      summary: "フォルダ削除API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        204:
+          "description": "A successful response."
+            
+  /v1/folder/{folder_id}/content:
+    get:
+      tags:
+        - "folder"
+      summary: "フォルダ内コンテンツ一覧取得API"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderContentGetResponse"
+            
+  /v1/folder/{folder_id}/content/{content_id}:
+    post:
+      tags:
+        - "folder"
+      summary: "フォルダにコンテンツを追加するAPI"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        204:
+          "description": "A successful response."
+    
+    delete:
+      tags:
+        - "folder"
+      summary: "フォルダからコンテンツを削除するAPI"
+      description: ""
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+      responses:
+        204:
+          "description": "A successful response."
+            
+definitions:
+  AuthRequest:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        description: "メールアドレス"
+      password:
+        type: "string"
+        description: "パスワード"
+      password_confirmation:
+        type: "string"
+        description: "パスワード(確認用)"
+  AuthResponse:
+    type: "object"
+    properties:
+      status:
+        type: "string"
+        description: "status"
+        example: "success"
+      data:
+        $ref: "#/definitions/User"
+  LoginRequest:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+        description: "メールアドレス"
+      password:
+        type: "string"
+        description: "パスワード"
+  LoginResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/User"
+  ContentListResponse:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/MetaData"
+      data:
+        type: "object"
+        properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
+  ContentCreateRequest:
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      file:
+        type: "string"
+        description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
+  ContentCreateResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Content"
+  ContentUpdateRequest:
+    type: "object"
+    properties:
+      content_id:
+        type: "integer"
+        description: "コンテンツid"
+        example: 126
+      title:
+        type: "string"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      file:
+        type: "string"
+        description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
+  ContentUpdateResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Content"
+  LikedContentListResponse:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/MetaData"
+      data:
+        type: "object"
+        properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
+  LikedResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          liked:
+            type: "boolean"
+            description: "liked"
+            example: true
+  FolderListResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          folder:
+            type: "array"
+            items:
+              $ref: "#/definitions/Folder"
+  FolderContentGetResponse:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/MetaData"
+      data:
+        type: "object"
+        properties:
+          folder:
+            $ref: "#/definitions/Folder"  
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
+  FolderCreateRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "フォルダ名"
+  FolderCreateResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Folder"
+  FolderUpdateRequest:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        description: "フォルダ名"
+  FolderUpdateResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Folder"
+  MetaData:
+    type: "object"
+    properties:
+      q:
+        type: "string"
+        description: "検索クエリ"
+        example: ""
+      limit:
+        type: "integer"
+        description: "取得数"
+        example: 50
+      offset:
+        type: "integer"
+        description: "取得位置(相対位置)"
+        example: 0
+      hasNext:
+        type: "boolean"
+        description: "続きが存在するかどうか"
+        example: true
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        description: "ユーザid"
+        example: 126
+      provider:
+        type: "string"
+        description: "provider"
+        example: "email"
+      uid:
+        type: "string"
+        description: "uid"
+        example: "example@example.com"
+      allow_password_change:
+        type: "boolean"
+        description: "allow_password_change"
+        example: false
+      email:
+        type: "string"
+        description: "email"
+        example: "example2@example.com"
+      created_at:
+        type: "string"
+        description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+      updated_at:
+        type: "string"
+        description: "updated_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+  Content:
+    type: "object"
+    properties:
+      content_id:
+        type: "integer"
+        description: "コンテンツid"
+        example: 126
+      type:
+        type: "string"
+        description: "type"
+        example: "web"
+      title:
+        type: "string"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      sharing_url:
+        type: "string"
+        description: "sharing_url"
+        example: "https://universal_link.hinatasaka.com"
+      file_url:
+        type: "string"
+        description: "file_url"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
+      liked:
+        type: "boolean"
+        description: "liked"
+        example: true
+      delete_flag:
+        type: "boolean"
+        description: "削除されたかどうか。削除から30日間は復元できるようにするために保持する。"
+        example: false
+      deleted_at:
+        type: "string"
+        description: "deleted_at"
+        example: null
+      created_at:
+        type: "string"
+        description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+      updated_at:
+        type: "string"
+        description: "updated_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+  Folder:
+    type: "object"
+    properties:
+      folder_id:
+        type: "integer"
+        description: "フォルダid"
+        example: 1
+      name:
+        type: "string"
+        description: "フォルダ名"
+        example: "動画"
+      content_count:
+        type: "integer"
+        description: "フォルダに含まれているコンテンツの数"
+        example: 10

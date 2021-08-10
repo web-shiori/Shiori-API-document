@@ -1,7 +1,7 @@
 {
-  "name": "techtrain-mission-game-api",
+  "name": "web-shiori-api",
   "version": "1.0.0",
-  "description": "TechTrain MISSION ゲームAPI入門仕様  まずはこのAPI仕様に沿って機能を実装してみましょう。    この画面の各APIの「Try it out」->「Execute」を利用することで  ローカル環境で起動中のAPIにAPIリクエストをすることができます。",
+  "description": "Web-Shiori API document",
   "main": "index.js",
   "scripts": {
 	"prestart": "npm install",
