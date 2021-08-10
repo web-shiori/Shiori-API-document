@@ -4,7 +4,7 @@ info:
   description: "Web-Shiori API document"
   version: "1.0.0"
   title: "Web-Shiori API"
-host: "localhost"
+host: "web-shiori-api-document.herokuapp.com"
 tags:
 - name: "auth"
   description: "認証関連API"
