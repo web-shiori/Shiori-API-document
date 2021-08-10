@@ -242,12 +242,12 @@ paths:
           type: "string"
         - in: "query"
           name: "limit"
-          description: "取得数"
+          description: "取得数。デフォルトは50"
           required: false
           type: "integer"
         - in: "query"
           name: "offset"
-          description: "取得位置"
+          description: "取得位置。デフォルトは0"
           required: false
           type: "integer"
       responses:
@@ -260,19 +260,25 @@ paths:
       tags:
         - "content"
       summary: "コンテンツ保存API"
-      description: "ガチャを引いてキャラクターを取得する処理を実装します。\n
-      獲得したキャラクターはユーザ所持キャラクターテーブルへ保存します。\n
-      同じ種類のキャラクターでもユーザは複数所持することができます。\n
-      \n
-      キャラクターの確率は等倍ではなく、任意に変更できるようテーブルを設計しましょう。"
+      description: "コンテンツ保存API"
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
         - in: "header"
-          name: "x-token"
-          description: "認証トークン"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
           required: true
           type: "string"
         - in: "body"
@@ -280,48 +286,82 @@ paths:
           description: "Request Body"
           required: true
           schema:
-            $ref: "#/definitions/GachaDrawRequest"
+            $ref: "#/definitions/ContentCreateRequest"
       responses:
-        200:
+        201:
           "description": "A successful response."
           "schema":
-            "$ref": "#/definitions/GachaDrawResponse"
+            "$ref": "#/definitions/ContentCreateResponse"
 
-  /v1/content/:content_id:
+  /v1/content/{content_id}:
     put:
       tags:
         - "content"
       summary: "コンテンツ情報更新API"
-      description: "ユーザが所持しているキャラクター一覧情報を取得します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
         - in: "header"
-          name: "x-token"
-          description: "認証トークン"
+          name: "access-token"
+          description: "アクセストークン"
           required: true
           type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/ContentUpdateRequest"
       responses:
-        200:
+        204:
           "description": "A successful response."
           "schema":
-            "$ref": "#/definitions/CharacterListResponse"
+            "$ref": "#/definitions/ContentUpdateResponse"
     
     delete:
       tags:
         - "content"
       summary: "コンテンツ削除API"
-      description: "ユーザが所持しているキャラクター一覧情報を取得します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
         - in: "header"
-          name: "x-token"
-          description: "認証トークン"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
           required: true
           type: "string"
       responses:
@@ -335,13 +375,27 @@ paths:
       tags:
         - "content"
       summary: "お気に入りコンテンツ一覧取得API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -364,18 +418,36 @@ paths:
           "schema":
             "$ref": "#/definitions/AuthResponse"
   
-  /v1/content/:content_id/like:
+  /v1/content/{content_id}/like:
     post:
       tags:
         - "content"
       summary: "お気に入り登録API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -402,13 +474,31 @@ paths:
       tags:
         - "content"
       summary: "お気に入り解除API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -436,13 +526,27 @@ paths:
       tags:
         - "folder"
       summary: "フォルダ一覧取得API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -468,13 +572,27 @@ paths:
       tags:
         - "folder"
       summary: "フォルダ作成API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -497,18 +615,36 @@ paths:
           "schema":
             "$ref": "#/definitions/AuthResponse"
             
-  /v1/folder/:folder_id:
+  /v1/folder/{folder_id}:
     put:
       tags:
         - "folder"
       summary: "フォルダ情報更新API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -535,13 +671,31 @@ paths:
       tags:
         - "folder"
       summary: "フォルダ削除API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -564,18 +718,36 @@ paths:
           "schema":
             "$ref": "#/definitions/AuthResponse"
             
-  /v1/folder/:folder_id/content:
+  /v1/folder/{folder_id}/content:
     get:
       tags:
         - "folder"
       summary: "フォルダ内コンテンツ一覧取得API"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -598,18 +770,40 @@ paths:
           "schema":
             "$ref": "#/definitions/AuthResponse"
             
-  /v1/folder/:folder_id/content/:content_id:
+  /v1/folder/{folder_id}/content/{content_id}:
     post:
       tags:
         - "folder"
       summary: "フォルダにコンテンツを追加するAPI"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
         - in: "body"
           name: "body"
           description: "Request Body"
@@ -636,34 +830,38 @@ paths:
       tags:
         - "folder"
       summary: "フォルダからコンテンツを削除するAPI"
-      description: "会員登録します。\n
-      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
-        - in: "body"
-          name: "body"
-          description: "Request Body"
+        - in: "path"
+          name: "folder_id"
           required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        200:
+        204:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
-          "schema":
-            "$ref": "#/definitions/AuthResponse"
             
 definitions:
   AuthRequest:
@@ -684,37 +882,9 @@ definitions:
       status:
         type: "string"
         description: "status"
+        example: "success"
       data:
-        type: "object"
-        properties:
-          id:
-            type: "integer"
-            description: "ユーザid"
-            example: 126
-          provider:
-            type: "string"
-            description: "provider"
-            example: "email"
-          uid:
-            type: "string"
-            description: "uid"
-            example: "example@example.com"
-          allow_password_change:
-            type: "boolean"
-            description: "allow_password_change"
-            example: false
-          email:
-            type: "string"
-            description: "email"
-            example: "example2@example.com"
-          created_at:
-            type: "string"
-            description: "created_at"
-            example: "2019-05-12T20:48:24.000+09:00"
-          updated_at:
-            type: "string"
-            description: "updated_at"
-            example: "2019-05-12T20:48:24.000+09:00"
+        $ref: "#/definitions/User"
   LoginRequest:
     type: "object"
     properties:
@@ -731,77 +901,152 @@ definitions:
     type: "object"
     properties:
       meta:
-        type: "object"
-        properties:
-          id:
-            type: "string"
-            description: "ユーザ名"
+        $ref: "#/definitions/MetaData"
       data:
         type: "object"
         properties:
-          id:
-            type: "string"
-            description: "ユーザ名"
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
   ContentCreateRequest:
     type: "object"
     properties:
-      name:
+      title:
         type: "string"
-        description: "ユーザ名"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      file:
+        type: "string"
+        description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
   ContentCreateResponse:
     type: "object"
     properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
+      data:
+        $ref: "#/definitions/Content"
   ContentUpdateRequest:
     type: "object"
     properties:
-      name:
+      content_id:
+        type: "integer"
+        description: "コンテンツid"
+        example: 126
+      title:
         type: "string"
-        description: "ユーザ名"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      file:
+        type: "string"
+        description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
   ContentUpdateResponse:
     type: "object"
     properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
-  ContentDeleteRequest:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
-  ContentDeleteResponse:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
-  LikedContentListRequest:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
+      data:
+        $ref: "#/definitions/Content"
   LikedContentListResponse:
     type: "object"
     properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
-  LikedRequest:
-    type: "object"
-    properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
+      meta:
+        $ref: "#/definitions/MetaData"
+      data:
+        type: "object"
+        properties:
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
   LikedResponse:
     type: "object"
     properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
+      data:
+        type: "object"
+        properties:
+          liked:
+            type: "boolean"
+            description: "liked"
+            example: true
   UserGetResponse:
     type: "object"
     properties:
@@ -843,6 +1088,139 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/UserCharacter"
+  MetaData:
+    type: "object"
+    properties:
+      q:
+        type: "string"
+        description: "検索クエリ"
+        example: ""
+      limit:
+        type: "integer"
+        description: "取得数"
+        example: 50
+      offset:
+        type: "integer"
+        description: "取得位置(相対位置)"
+        example: 0
+      hasNext:
+        type: "boolean"
+        description: "続きが存在するかどうか"
+        example: true
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        description: "ユーザid"
+        example: 126
+      provider:
+        type: "string"
+        description: "provider"
+        example: "email"
+      uid:
+        type: "string"
+        description: "uid"
+        example: "example@example.com"
+      allow_password_change:
+        type: "boolean"
+        description: "allow_password_change"
+        example: false
+      email:
+        type: "string"
+        description: "email"
+        example: "example2@example.com"
+      created_at:
+        type: "string"
+        description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+      updated_at:
+        type: "string"
+        description: "updated_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+  Content:
+    type: "object"
+    properties:
+      content_id:
+        type: "integer"
+        description: "コンテンツid"
+        example: 126
+      type:
+        type: "string"
+        description: "type"
+        example: "web"
+      title:
+        type: "string"
+        description: "title"
+        example: "日向坂で会いましょう"
+      url:
+        type: "string"
+        description: "url"
+        example: "https://hinatasaka.com"
+      sharing_url:
+        type: "string"
+        description: "sharing_url"
+        example: "https://universal_link.hinatasaka.com"
+      file_url:
+        type: "string"
+        description: "file_url"
+        example: null
+      scroll_position_x:
+        type: "integer"
+        description: "scroll_position_x"
+        example: 0
+      scroll_position_y:
+        type: "integer"
+        description: "scroll_position_y"
+        example: 200
+      max_scroll_position_x:
+        type: "integer"
+        description: "max_scroll_position_x"
+        example: 0
+      max_scroll_position_y:
+        type: "integer"
+        description: "max_scroll_position_y"
+        example: 10000
+      video_playback_position:
+        type: "integer"
+        description: "video_playback_position"
+        example: 500
+      specified_text:
+        type: "string"
+        description: "specified_text"
+        example: null
+      specified_dom_id:
+        type: "string"
+        description: "specified_dom_id"
+        example: null
+      specified_dom_class:
+        type: "string"
+        description: "specified_dom_class"
+        example: null
+      specified_dom_tag:
+        type: "string"
+        description: "specified_dom_tag"
+        example: null
+      liked:
+        type: "boolean"
+        description: "liked"
+        example: true
+      delete_flag:
+        type: "boolean"
+        description: "削除されたかどうか。削除から30日間は復元できるようにするために保持する。"
+        example: false
+      deleted_at:
+        type: "string"
+        description: "deleted_at"
+        example: null
+      created_at:
+        type: "string"
+        description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
+      updated_at:
+        type: "string"
+        description: "updated_at"
+        example: "2019-05-12T20:48:24.000+09:00"
   UserCharacter:
     type: "object"
     properties:
