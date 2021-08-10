@@ -30,8 +30,10 @@ paths:
       operationId: "v1AuthPOST"
       consumes:
       - "application/json"
+      - "application/xml"
       produces:
       - "application/json"
+      - "application/xml"
       parameters:
       - in: "body"
         name: "body"
