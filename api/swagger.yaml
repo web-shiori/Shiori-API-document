@@ -1,4 +1,3 @@
----
 swagger: "2.0"
 info:
   description: "Web-Shiori API document"
@@ -6,37 +5,36 @@ info:
   title: "Web-Shiori API"
 host: "web-shiori-api-document.herokuapp.com"
 tags:
-- name: "auth"
-  description: "認証関連API"
-- name: "content"
-  description: "コンテンツ関連API"
-- name: "folder"
-  description: "フォルダ関連API"
+  - name: "auth"
+    description: "認証関連API"
+  - name: "content"
+    description: "コンテンツ関連API"
+  - name: "folder"
+    description: "フォルダ関連API"
 schemes:
-- "https"
+  - "https"
 paths:
   /v1/auth:
     post:
       tags:
-      - "auth"
+        - "auth"
       summary: "会員登録用API"
-      description: "会員登録します。\n email, password, password_confirmationをリクエストで受け取り、ユ\
-        ーザと認証用のトークンを生成します。"
-      operationId: "v1AuthPOST"
+      description: "会員登録します。\n
+      email, password, password_confirmationをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/AuthRequest"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/AuthRequest"
       responses:
-        "200":
-          description: "A successful response."
+        200:
+          "description": "A successful response."
           headers:
             access-token:
               type: "string"
@@ -47,30 +45,30 @@ paths:
             uid:
               type: "string"
               description: "uid"
-          schema:
-            $ref: "#/definitions/AuthResponse"
-      x-swagger-router-controller: "Auth"
+          "schema":
+            "$ref": "#/definitions/AuthResponse"
+
   /v1/auth/login:
     post:
       tags:
-      - "auth"
+        - "auth"
       summary: "ログイン用API"
-      description: "ログインします。\n email, passwordをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
-      operationId: "v1AuthLoginPOST"
+      description: "ログインします。\n
+      email, passwordをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/LoginRequest"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
+          schema:
+            $ref: "#/definitions/LoginRequest"
       responses:
-        "200":
-          description: "A successful response."
+        200:
+          "description": "A successful response."
           headers:
             access-token:
               type: "string"
@@ -81,24 +79,22 @@ paths:
             uid:
               type: "string"
               description: "uid"
-          schema:
-            $ref: "#/definitions/LoginResponse"
-      x-swagger-router-controller: "Auth"
+          "schema":
+            "$ref": "#/definitions/LoginResponse"
+  
   /v1/auth/login/google:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Googleログイン用API"
       description: ""
-      operationId: "v1AuthLoginGoogleGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
+        200:
+          "description": "A successful response."
           headers:
             access-token:
               type: "string"
@@ -109,38 +105,34 @@ paths:
             uid:
               type: "string"
               description: "uid"
-      x-swagger-router-controller: "Auth"
+              
   /v1/auth/callback/google:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Googleの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackGoogleGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
-      x-swagger-router-controller: "Auth"
+        200:
+          "description": "A successful response."
+            
   /v1/auth/login/twitter:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Twitterログイン用API"
       description: ""
-      operationId: "v1AuthLoginTwitterGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
+        200:
+          "description": "A successful response."
           headers:
             access-token:
               type: "string"
@@ -151,38 +143,34 @@ paths:
             uid:
               type: "string"
               description: "uid"
-      x-swagger-router-controller: "Auth"
+            
   /v1/auth/callback/twitter:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Twitterの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackTwitterGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
-      x-swagger-router-controller: "Auth"
+        200:
+          "description": "A successful response."
+  
   /v1/auth/login/github:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Githubログイン用API"
       description: ""
-      operationId: "v1AuthLoginGithubGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
+        200:
+          "description": "A successful response."
           headers:
             access-token:
               type: "string"
@@ -193,582 +181,571 @@ paths:
             uid:
               type: "string"
               description: "uid"
-      x-swagger-router-controller: "Auth"
+
   /v1/auth/callback/github:
     get:
       tags:
-      - "auth"
+        - "auth"
       summary: "Githubの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackGithubGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
-      parameters: []
+        - "application/json"
       responses:
-        "200":
-          description: "A successful response."
-      x-swagger-router-controller: "Auth"
+        200:
+          "description": "A successful response."
+            
   /v1/content:
     get:
       tags:
-      - "content"
+        - "content"
       summary: "コンテンツ一覧取得API"
       description: "コンテンツ一覧を取得します。"
-      operationId: "v1ContentGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - name: "q"
-        in: "query"
-        description: "検索クエリ"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        description: "取得数。デフォルトは50"
-        required: false
-        type: "integer"
-      - name: "offset"
-        in: "query"
-        description: "取得位置。デフォルトは0"
-        required: false
-        type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+          format: "int64"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+          format: "int64"
       responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/ContentListResponse"
-      x-swagger-router-controller: "Content"
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentListResponse"
+
     post:
       tags:
-      - "content"
+        - "content"
       summary: "コンテンツ保存API"
       description: "コンテンツ保存API"
-      operationId: "v1ContentPOST"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/ContentCreateRequest"
-      responses:
-        "201":
-          description: "A successful response."
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
           schema:
-            $ref: "#/definitions/ContentCreateResponse"
-      x-swagger-router-controller: "Content"
+            $ref: "#/definitions/ContentCreateRequest"
+      responses:
+        201:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentCreateResponse"
+
   /v1/content/{content_id}:
     put:
       tags:
-      - "content"
+        - "content"
       summary: "コンテンツ情報更新API"
       description: ""
-      operationId: "v1ContentContent_idPUT"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/ContentUpdateRequest"
-      responses:
-        "204":
-          description: "A successful response."
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
           schema:
-            $ref: "#/definitions/ContentUpdateResponse"
-      x-swagger-router-controller: "Content"
+            $ref: "#/definitions/ContentUpdateRequest"
+      responses:
+        204:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/ContentUpdateResponse"
+    
     delete:
       tags:
-      - "content"
+        - "content"
       summary: "コンテンツ削除API"
       description: ""
-      operationId: "v1ContentContent_idDELETE"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Content"
+        204:
+          "description": "A successful response."
+  
   /v1/likes:
     get:
       tags:
-      - "content"
+        - "content"
       summary: "お気に入りコンテンツ一覧取得API"
       description: ""
-      operationId: "v1LikesGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - name: "q"
-        in: "query"
-        description: "検索クエリ"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        description: "取得数。デフォルトは50"
-        required: false
-        type: "integer"
-      - name: "offset"
-        in: "query"
-        description: "取得位置。デフォルトは0"
-        required: false
-        type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+          format: "int64"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+          format: "int64"
       responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/LikedContentListResponse"
-      x-swagger-router-controller: "Content"
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/LikedContentListResponse"
+  
   /v1/content/{content_id}/like:
     post:
       tags:
-      - "content"
+        - "content"
       summary: "お気に入り登録API"
       description: ""
-      operationId: "v1ContentContent_idLikePOST"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/LikedResponse"
-      x-swagger-router-controller: "Content"
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/LikedResponse"
+            
     delete:
       tags:
-      - "content"
+        - "content"
       summary: "お気に入り解除API"
       description: ""
-      operationId: "v1ContentContent_idLikeDELETE"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Content"
+        204:
+          "description": "A successful response."
+  
   /v1/folder:
     get:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダ一覧取得API"
       description: ""
-      operationId: "v1FolderGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/FolderListResponse"
-      x-swagger-router-controller: "Folder"
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderListResponse"
     post:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダ作成API"
       description: ""
-      operationId: "v1FolderPOST"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/FolderCreateRequest"
-      responses:
-        "200":
-          description: "A successful response."
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
           schema:
-            $ref: "#/definitions/FolderCreateResponse"
-      x-swagger-router-controller: "Folder"
+            $ref: "#/definitions/FolderCreateRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderCreateResponse"
+            
   /v1/folder/{folder_id}:
     put:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダ情報更新API"
       description: ""
-      operationId: "v1FolderFolder_idPUT"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "folder_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "Request Body"
-        required: true
-        schema:
-          $ref: "#/definitions/FolderUpdateRequest"
-      responses:
-        "200":
-          description: "A successful response."
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
+          required: true
           schema:
-            $ref: "#/definitions/FolderUpdateResponse"
-      x-swagger-router-controller: "Folder"
+            $ref: "#/definitions/FolderUpdateRequest"
+      responses:
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderUpdateResponse"
+    
     delete:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダ削除API"
       description: ""
-      operationId: "v1FolderFolder_idDELETE"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "folder_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Folder"
+        204:
+          "description": "A successful response."
+            
   /v1/folder/{folder_id}/content:
     get:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダ内コンテンツ一覧取得API"
       description: ""
-      operationId: "v1FolderFolder_idContentGET"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "folder_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - name: "q"
-        in: "query"
-        description: "検索クエリ"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        description: "取得数。デフォルトは50"
-        required: false
-        type: "integer"
-      - name: "offset"
-        in: "query"
-        description: "取得位置。デフォルトは0"
-        required: false
-        type: "integer"
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+          format: "int64"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
+          format: "int64"
       responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/FolderContentGetResponse"
-      x-swagger-router-controller: "Folder"
+        200:
+          "description": "A successful response."
+          "schema":
+            "$ref": "#/definitions/FolderContentGetResponse"
+            
   /v1/folder/{folder_id}/content/{content_id}:
     post:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダにコンテンツを追加するAPI"
       description: ""
-      operationId: "v1FolderFolder_idContentContent_idPOST"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "folder_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Folder"
+        204:
+          "description": "A successful response."
+    
     delete:
       tags:
-      - "folder"
+        - "folder"
       summary: "フォルダからコンテンツを削除するAPI"
       description: ""
-      operationId: "v1FolderFolder_idContentContent_idDELETE"
       consumes:
-      - "application/json"
+        - "application/json"
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
-      - name: "folder_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
+        - in: "path"
+          name: "folder_id"
+          required: true
+          type: "integer"
+        - in: "path"
+          name: "content_id"
+          required: true
+          type: "integer"
+        - in: "header"
+          name: "access-token"
+          description: "アクセストークン"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "client"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "header"
+          name: "uid"
+          description: "uid"
+          required: true
+          type: "string"
       responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Folder"
+        204:
+          "description": "A successful response."
+            
 definitions:
   AuthRequest:
     type: "object"
@@ -782,29 +759,15 @@ definitions:
       password_confirmation:
         type: "string"
         description: "パスワード(確認用)"
-    example:
-      password: "password"
-      password_confirmation: "password_confirmation"
-      email: "email"
   AuthResponse:
     type: "object"
     properties:
       status:
         type: "string"
-        example: "success"
         description: "status"
+        example: "success"
       data:
         $ref: "#/definitions/User"
-    example:
-      data:
-        uid: "example@example.com"
-        updated_at: "2019-05-12T20:48:24.000+09:00"
-        provider: "email"
-        created_at: "2019-05-12T20:48:24.000+09:00"
-        id: 126
-        allow_password_change: false
-        email: "example2@example.com"
-      status: "success"
   LoginRequest:
     type: "object"
     properties:
@@ -814,23 +777,11 @@ definitions:
       password:
         type: "string"
         description: "パスワード"
-    example:
-      password: "password"
-      email: "email"
   LoginResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/User"
-    example:
-      data:
-        uid: "example@example.com"
-        updated_at: "2019-05-12T20:48:24.000+09:00"
-        provider: "email"
-        created_at: "2019-05-12T20:48:24.000+09:00"
-        id: 126
-        allow_password_change: false
-        email: "example2@example.com"
   ContentListResponse:
     type: "object"
     properties:
@@ -843,200 +794,133 @@ definitions:
             type: "array"
             items:
               $ref: "#/definitions/Content"
-    example:
-      data: "{}"
-      meta:
-        q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
   ContentCreateRequest:
     type: "object"
     properties:
       title:
         type: "string"
-        example: "日向坂で会いましょう"
         description: "title"
+        example: "日向坂で会いましょう"
       url:
         type: "string"
-        example: "https://hinatasaka.com"
         description: "url"
+        example: "https://hinatasaka.com"
       file:
         type: "string"
-        example: "null"
         description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
       scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "scroll_position_x"
+        example: 0
       scroll_position_y:
         type: "integer"
-        example: 200
+        format: "int64"
         description: "scroll_position_y"
+        example: 200
       max_scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "max_scroll_position_x"
+        example: 0
       max_scroll_position_y:
         type: "integer"
-        example: 10000
+        format: "int64"
         description: "max_scroll_position_y"
+        example: 10000
       video_playback_position:
         type: "integer"
-        example: 500
+        format: "int64"
         description: "video_playback_position"
+        example: 500
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
+        example: null
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
+        example: null
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
+        example: null
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
-    example:
-      video_playback_position: 500
-      specified_dom_id: "null"
-      file: "null"
-      specified_dom_class: "null"
-      max_scroll_position_y: 10000
-      specified_text: "null"
-      scroll_position_y: 200
-      scroll_position_x: 0
-      max_scroll_position_x: 0
-      title: "日向坂で会いましょう"
-      specified_dom_tag: "null"
-      url: "https://hinatasaka.com"
+        example: null
   ContentCreateResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/Content"
-    example:
-      data:
-        file_url: "null"
-        specified_dom_id: "null"
-        content_id: 126
-        max_scroll_position_y: 10000
-        created_at: "2019-05-12T20:48:24.000+09:00"
-        scroll_position_y: 200
-        scroll_position_x: 0
-        max_scroll_position_x: 0
-        type: "web"
-        title: "日向坂で会いましょう"
-        deleted_at: "null"
-        url: "https://hinatasaka.com"
-        sharing_url: "https://universal_link.hinatasaka.com"
-        liked: true
-        video_playback_position: 500
-        specified_dom_class: "null"
-        updated_at: "2019-05-12T20:48:24.000+09:00"
-        specified_text: "null"
-        delete_flag: false
-        specified_dom_tag: "null"
   ContentUpdateRequest:
     type: "object"
     properties:
       content_id:
         type: "integer"
-        example: 126
+        format: "int64"
         description: "コンテンツid"
+        example: 126
       title:
         type: "string"
-        example: "日向坂で会いましょう"
         description: "title"
+        example: "日向坂で会いましょう"
       url:
         type: "string"
-        example: "https://hinatasaka.com"
         description: "url"
+        example: "https://hinatasaka.com"
       file:
         type: "string"
-        example: "null"
         description: "fileをアップロードしたいけどtypeにfileがない。別エンドポイントを作らないといけない？"
+        example: null
       scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "scroll_position_x"
+        example: 0
       scroll_position_y:
         type: "integer"
-        example: 200
+        format: "int64"
         description: "scroll_position_y"
+        example: 200
       max_scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "max_scroll_position_x"
+        example: 0
       max_scroll_position_y:
         type: "integer"
-        example: 10000
+        format: "int64"
         description: "max_scroll_position_y"
+        example: 10000
       video_playback_position:
         type: "integer"
-        example: 500
+        format: "int64"
         description: "video_playback_position"
+        example: 500
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
+        example: null
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
+        example: null
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
+        example: null
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
-    example:
-      specified_dom_id: "null"
-      content_id: 126
-      max_scroll_position_y: 10000
-      scroll_position_y: 200
-      scroll_position_x: 0
-      max_scroll_position_x: 0
-      title: "日向坂で会いましょう"
-      url: "https://hinatasaka.com"
-      video_playback_position: 500
-      file: "null"
-      specified_dom_class: "null"
-      specified_text: "null"
-      specified_dom_tag: "null"
+        example: null
   ContentUpdateResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/Content"
-    example:
-      data:
-        file_url: "null"
-        specified_dom_id: "null"
-        content_id: 126
-        max_scroll_position_y: 10000
-        created_at: "2019-05-12T20:48:24.000+09:00"
-        scroll_position_y: 200
-        scroll_position_x: 0
-        max_scroll_position_x: 0
-        type: "web"
-        title: "日向坂で会いましょう"
-        deleted_at: "null"
-        url: "https://hinatasaka.com"
-        sharing_url: "https://universal_link.hinatasaka.com"
-        liked: true
-        video_playback_position: 500
-        specified_dom_class: "null"
-        updated_at: "2019-05-12T20:48:24.000+09:00"
-        specified_text: "null"
-        delete_flag: false
-        specified_dom_tag: "null"
   LikedContentListResponse:
     type: "object"
     properties:
@@ -1049,13 +933,6 @@ definitions:
             type: "array"
             items:
               $ref: "#/definitions/Content"
-    example:
-      data: "{}"
-      meta:
-        q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
   LikedResponse:
     type: "object"
     properties:
@@ -1064,10 +941,8 @@ definitions:
         properties:
           liked:
             type: "boolean"
-            example: true
             description: "liked"
-    example:
-      data: "{}"
+            example: true
   FolderListResponse:
     type: "object"
     properties:
@@ -1078,8 +953,6 @@ definitions:
             type: "array"
             items:
               $ref: "#/definitions/Folder"
-    example:
-      data: "{}"
   FolderContentGetResponse:
     type: "object"
     properties:
@@ -1089,237 +962,194 @@ definitions:
         type: "object"
         properties:
           folder:
-            $ref: "#/definitions/Folder"
+            $ref: "#/definitions/Folder"  
           content:
             type: "array"
             items:
               $ref: "#/definitions/Content"
-    example:
-      data: "{}"
-      meta:
-        q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
   FolderCreateRequest:
     type: "object"
     properties:
       name:
         type: "string"
         description: "フォルダ名"
-    example:
-      name: "name"
   FolderCreateResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/Folder"
-    example:
-      data:
-        name: "動画"
-        folder_id: 1
-        content_count: 10
   FolderUpdateRequest:
     type: "object"
     properties:
       name:
         type: "string"
         description: "フォルダ名"
-    example:
-      name: "name"
   FolderUpdateResponse:
     type: "object"
     properties:
       data:
         $ref: "#/definitions/Folder"
-    example:
-      data:
-        name: "動画"
-        folder_id: 1
-        content_count: 10
   MetaData:
     type: "object"
     properties:
       q:
         type: "string"
-        example: ""
         description: "検索クエリ"
+        example: ""
       limit:
         type: "integer"
-        example: 50
+        format: "int64"
         description: "取得数"
+        example: 50
       offset:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "取得位置(相対位置)"
+        example: 0
       hasNext:
         type: "boolean"
-        example: true
         description: "続きが存在するかどうか"
-    example:
-      q: ""
-      offset: 0
-      limit: 50
-      hasNext: true
+        example: true
   User:
     type: "object"
     properties:
       id:
         type: "integer"
-        example: 126
+        format: "int64"
         description: "ユーザid"
+        example: 126
       provider:
         type: "string"
-        example: "email"
         description: "provider"
+        example: "email"
       uid:
         type: "string"
-        example: "example@example.com"
         description: "uid"
+        example: "example@example.com"
       allow_password_change:
         type: "boolean"
-        example: false
         description: "allow_password_change"
+        example: false
       email:
         type: "string"
-        example: "example2@example.com"
         description: "email"
+        example: "example2@example.com"
       created_at:
         type: "string"
-        example: "2019-05-12T20:48:24.000+09:00"
+        format: "date-time"
         description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
       updated_at:
         type: "string"
-        example: "2019-05-12T20:48:24.000+09:00"
+        format: "date-time"
         description: "updated_at"
-    example:
-      uid: "example@example.com"
-      updated_at: "2019-05-12T20:48:24.000+09:00"
-      provider: "email"
-      created_at: "2019-05-12T20:48:24.000+09:00"
-      id: 126
-      allow_password_change: false
-      email: "example2@example.com"
+        example: "2019-05-12T20:48:24.000+09:00"
   Content:
     type: "object"
     properties:
       content_id:
         type: "integer"
-        example: 126
+        format: "int64"
         description: "コンテンツid"
+        example: 126
       type:
         type: "string"
-        example: "web"
         description: "type"
+        example: "web"
       title:
         type: "string"
-        example: "日向坂で会いましょう"
         description: "title"
+        example: "日向坂で会いましょう"
       url:
         type: "string"
-        example: "https://hinatasaka.com"
         description: "url"
+        example: "https://hinatasaka.com"
       sharing_url:
         type: "string"
-        example: "https://universal_link.hinatasaka.com"
         description: "sharing_url"
+        example: "https://universal_link.hinatasaka.com"
       file_url:
         type: "string"
-        example: "null"
         description: "file_url"
+        example: null
       scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "scroll_position_x"
+        example: 0
       scroll_position_y:
         type: "integer"
-        example: 200
+        format: "int64"
         description: "scroll_position_y"
+        example: 200
       max_scroll_position_x:
         type: "integer"
-        example: 0
+        format: "int64"
         description: "max_scroll_position_x"
+        example: 0
       max_scroll_position_y:
         type: "integer"
-        example: 10000
+        format: "int64"
         description: "max_scroll_position_y"
+        example: 10000
       video_playback_position:
         type: "integer"
-        example: 500
+        format: "int64"
         description: "video_playback_position"
+        example: 500
       specified_text:
         type: "string"
-        example: "null"
         description: "specified_text"
+        example: null
       specified_dom_id:
         type: "string"
-        example: "null"
         description: "specified_dom_id"
+        example: null
       specified_dom_class:
         type: "string"
-        example: "null"
         description: "specified_dom_class"
+        example: null
       specified_dom_tag:
         type: "string"
-        example: "null"
         description: "specified_dom_tag"
+        example: null
       liked:
         type: "boolean"
-        example: true
         description: "liked"
+        example: true
       delete_flag:
         type: "boolean"
-        example: false
         description: "削除されたかどうか。削除から30日間は復元できるようにするために保持する。"
+        example: false
       deleted_at:
         type: "string"
-        example: "null"
+        format: "date-time"
         description: "deleted_at"
+        example: null
       created_at:
         type: "string"
-        example: "2019-05-12T20:48:24.000+09:00"
+        format: "date-time"
         description: "created_at"
+        example: "2019-05-12T20:48:24.000+09:00"
       updated_at:
         type: "string"
-        example: "2019-05-12T20:48:24.000+09:00"
+        format: "date-time"
         description: "updated_at"
-    example:
-      file_url: "null"
-      specified_dom_id: "null"
-      content_id: 126
-      max_scroll_position_y: 10000
-      created_at: "2019-05-12T20:48:24.000+09:00"
-      scroll_position_y: 200
-      scroll_position_x: 0
-      max_scroll_position_x: 0
-      type: "web"
-      title: "日向坂で会いましょう"
-      deleted_at: "null"
-      url: "https://hinatasaka.com"
-      sharing_url: "https://universal_link.hinatasaka.com"
-      liked: true
-      video_playback_position: 500
-      specified_dom_class: "null"
-      updated_at: "2019-05-12T20:48:24.000+09:00"
-      specified_text: "null"
-      delete_flag: false
-      specified_dom_tag: "null"
+        example: "2019-05-12T20:48:24.000+09:00"
   Folder:
     type: "object"
     properties:
       folder_id:
         type: "integer"
-        example: 1
+        format: "int64"
         description: "フォルダid"
+        example: 1
       name:
         type: "string"
-        example: "動画"
         description: "フォルダ名"
+        example: "動画"
       content_count:
         type: "integer"
-        example: 10
+        format: "int64"
         description: "フォルダに含まれているコンテンツの数"
-    example:
-      name: "動画"
-      folder_id: 1
-      content_count: 10
+        example: 10
