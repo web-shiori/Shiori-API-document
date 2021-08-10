@@ -53,161 +53,148 @@ paths:
       tags:
         - "auth"
       summary: "ログイン用API"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: "ログインします。\n
+      email, passwordをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
       consumes:
         - "application/json"
       produces:
         - "application/json"
       parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
+        - in: "body"
+          name: "body"
+          description: "Request Body"
           required: true
-          type: "string"
+          schema:
+            $ref: "#/definitions/LoginRequest"
       responses:
         200:
           "description": "A successful response."
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
           "schema":
-            "$ref": "#/definitions/UserGetResponse"
+            "$ref": "#/definitions/LoginResponse"
   
   /v1/auth/login/google:
     get:
       tags:
         - "auth"
       summary: "Googleログイン用API"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
-            
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
+              
   /v1/auth/callback/google:
     get:
       tags:
         - "auth"
       summary: "Googleの認証が終わった際にリダイレクトされてくるAPI"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: "クライアントが直接叩くことはない"
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
             
   /v1/auth/login/twitter:
     get:
       tags:
         - "auth"
       summary: "Twitterログイン用API"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
             
   /v1/auth/callback/twitter:
     get:
       tags:
         - "auth"
       summary: "Twitterの認証が終わった際にリダイレクトされてくるAPI"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: "クライアントが直接叩くことはない"
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
   
   /v1/auth/login/github:
     get:
       tags:
         - "auth"
       summary: "Githubログイン用API"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: ""
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
+          headers:
+            access-token:
+              type: "string"
+              description: "access-token"
+            client:
+              type: "string"
+              description: "client"
+            uid:
+              type: "string"
+              description: "uid"
 
   /v1/auth/callback/github:
     get:
       tags:
         - "auth"
       summary: "Githubの認証が終わった際にリダイレクトされてくるAPI"
-      description: "ユーザ情報を取得します。\n
-      ユーザの認証と特定の処理はリクエストヘッダのx-tokenを読み取ってデータベースに照会をします。"
+      description: "クライアントが直接叩くことはない"
       consumes:
         - "application/json"
       produces:
         - "application/json"
-      parameters:
-        - in: "header"
-          name: "x-token"
-          description: "認証トークン"
-          required: true
-          type: "string"
       responses:
         200:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/UserGetResponse"
             
   /v1/content:
     get:
@@ -365,10 +352,8 @@ paths:
           required: true
           type: "string"
       responses:
-        200:
+        204:
           "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/CharacterListResponse"
   
   /v1/likes:
     get:
@@ -396,27 +381,26 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/LikedContentListResponse"
   
   /v1/content/{content_id}/like:
     post:
@@ -448,27 +432,11 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/LikedResponse"
             
     delete:
       tags:
@@ -499,27 +467,9 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
       responses:
-        200:
+        204:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
-          "schema":
-            "$ref": "#/definitions/AuthResponse"
   
   /v1/folder:
     get:
@@ -547,27 +497,11 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/FolderListResponse"
     post:
       tags:
         - "folder"
@@ -598,22 +532,12 @@ paths:
           description: "Request Body"
           required: true
           schema:
-            $ref: "#/definitions/AuthRequest"
+            $ref: "#/definitions/FolderCreateRequest"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/FolderCreateResponse"
             
   /v1/folder/{folder_id}:
     put:
@@ -650,22 +574,12 @@ paths:
           description: "Request Body"
           required: true
           schema:
-            $ref: "#/definitions/AuthRequest"
+            $ref: "#/definitions/FolderUpdateRequest"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/FolderUpdateResponse"
     
     delete:
       tags:
@@ -696,27 +610,9 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
       responses:
-        200:
+        204:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
-          "schema":
-            "$ref": "#/definitions/AuthResponse"
             
   /v1/folder/{folder_id}/content:
     get:
@@ -748,27 +644,26 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
+        - in: "query"
+          name: "q"
+          description: "検索クエリ"
+          required: false
+          type: "string"
+        - in: "query"
+          name: "limit"
+          description: "取得数。デフォルトは50"
+          required: false
+          type: "integer"
+        - in: "query"
+          name: "offset"
+          description: "取得位置。デフォルトは0"
+          required: false
+          type: "integer"
       responses:
         200:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           "schema":
-            "$ref": "#/definitions/AuthResponse"
+            "$ref": "#/definitions/FolderContentGetResponse"
             
   /v1/folder/{folder_id}/content/{content_id}:
     post:
@@ -804,27 +699,9 @@ paths:
           description: "uid"
           required: true
           type: "string"
-        - in: "body"
-          name: "body"
-          description: "Request Body"
-          required: true
-          schema:
-            $ref: "#/definitions/AuthRequest"
       responses:
-        200:
+        204:
           "description": "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
-          "schema":
-            "$ref": "#/definitions/AuthResponse"
     
     delete:
       tags:
@@ -888,15 +765,17 @@ definitions:
   LoginRequest:
     type: "object"
     properties:
-      name:
+      email:
         type: "string"
-        description: "ユーザ名"
+        description: "メールアドレス"
+      password:
+        type: "string"
+        description: "パスワード"
   LoginResponse:
     type: "object"
     properties:
-      name:
-        type: "string"
-        description: "ユーザ名"
+      data:
+        $ref: "#/definitions/User"
   ContentListResponse:
     type: "object"
     properties:
@@ -1047,47 +926,52 @@ definitions:
             type: "boolean"
             description: "liked"
             example: true
-  UserGetResponse:
+  FolderListResponse:
+    type: "object"
+    properties:
+      data:
+        type: "object"
+        properties:
+          folder:
+            type: "array"
+            items:
+              $ref: "#/definitions/Folder"
+  FolderContentGetResponse:
+    type: "object"
+    properties:
+      meta:
+        $ref: "#/definitions/MetaData"
+      data:
+        type: "object"
+        properties:
+          folder:
+            $ref: "#/definitions/Folder"  
+          content:
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
+  FolderCreateRequest:
     type: "object"
     properties:
       name:
         type: "string"
-        description: "ユーザ名"
-  UserUpdateRequest:
+        description: "フォルダ名"
+  FolderCreateResponse:
+    type: "object"
+    properties:
+      data:
+        $ref: "#/definitions/Folder"
+  FolderUpdateRequest:
     type: "object"
     properties:
       name:
         type: "string"
-        description: "ユーザ名"
-  GachaDrawRequest:
+        description: "フォルダ名"
+  FolderUpdateResponse:
     type: "object"
     properties:
-      times:
-        type: "integer"
-        description: "実行回数"
-  GachaDrawResponse:
-    type: "object"
-    properties:
-      results:
-        type: "array"
-        items:
-          $ref: "#/definitions/GachaResult"
-  GachaResult:
-    type: "object"
-    properties:
-      characterID:
-        type: "string"
-        description: "キャラクターID"
-      name:
-        type: "string"
-        description: "キャラクター名"
-  CharacterListResponse:
-    type: "object"
-    properties:
-      characters:
-        type: "array"
-        items:
-          $ref: "#/definitions/UserCharacter"
+      data:
+        $ref: "#/definitions/Folder"
   MetaData:
     type: "object"
     properties:
@@ -1221,15 +1105,18 @@ definitions:
         type: "string"
         description: "updated_at"
         example: "2019-05-12T20:48:24.000+09:00"
-  UserCharacter:
+  Folder:
     type: "object"
     properties:
-      userCharacterID:
-        type: "string"
-        description: "ユニークID"
-      characterID:
-        type: "string"
-        description: "キャラクターID"
+      folder_id:
+        type: "integer"
+        description: "フォルダid"
+        example: 1
       name:
         type: "string"
-        description: "キャラクター名"
+        description: "フォルダ名"
+        example: "動画"
+      content_count:
+        type: "integer"
+        description: "フォルダに含まれているコンテンツの数"
+        example: 10
