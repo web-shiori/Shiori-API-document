@@ -42,16 +42,6 @@ paths:
       responses:
         "200":
           description: "A successful response."
-          headers:
-            access-token:
-              type: "string"
-              description: "access-token"
-            client:
-              type: "string"
-              description: "client"
-            uid:
-              type: "string"
-              description: "uid"
           schema:
             $ref: "#/definitions/AuthResponse"
       x-swagger-router-controller: "Auth"
