@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "Web-Shiori API document"
-  version: 1.0.1
+  version: 1.0.0
   title: "Web-Shiori API"
   contact:
     email: "shiori.web.forsafari@gmail.com"
@@ -797,7 +797,9 @@ definitions:
         type: "object"
         properties:
           content:
-            $ref: "#/definitions/ContentList"
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
   ContentCreateRequest:
     type: "object"
     properties:
@@ -1063,11 +1065,11 @@ definitions:
       title:
         type: "string"
         description: "title"
-        example: "日向坂で会いましょう"
+        example: "Web-Shioriデモ動画"
       url:
         type: "string"
         description: "url"
-        example: "https://hinatasaka.com"
+        example: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
       sharing_url:
         type: "string"
         description: "sharing_url"
@@ -1089,7 +1091,7 @@ definitions:
         type: "integer"
         format: "int64"
         description: "scroll_position_y"
-        example: 200
+        example: 500
       max_scroll_position_x:
         type: "integer"
         format: "int64"
@@ -1099,12 +1101,12 @@ definitions:
         type: "integer"
         format: "int64"
         description: "max_scroll_position_y"
-        example: 10000
+        example: 1000
       video_playback_position:
         type: "integer"
         format: "int64"
         description: "video_playback_position"
-        example: 500
+        example: 50
       specified_text:
         type: "string"
         description: "specified_text"
@@ -1144,196 +1146,6 @@ definitions:
         format: "date-time"
         description: "updated_at"
         example: "2019-05-12T20:48:24.000+09:00"
-  ContentList:
-    type: "array"
-    items:
-      example: 
-        - content_id:
-            type: "integer"
-            format: "int64"
-            description: "コンテンツid"
-            example: 126
-          type:
-            type: "string"
-            description: "type"
-            example: "web"
-          title:
-            type: "string"
-            description: "title"
-            example: "Web-Shioriデモ動画"
-          url:
-            type: "string"
-            description: "url"
-            example: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
-          sharing_url:
-            type: "string"
-            description: "sharing_url"
-            example: "https://universal_link.hinatasaka.com"
-          file_url:
-            type: "string"
-            description: "file_url"
-            example: null
-          thumbnail_img_url:
-            type: "string"
-            description: "サムネイル画像url"
-            example: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
-          scroll_position_x:
-            type: "integer"
-            format: "int64"
-            description: "scroll_position_x"
-            example: 0
-          scroll_position_y:
-            type: "integer"
-            format: "int64"
-            description: "scroll_position_y"
-            example: 0
-          max_scroll_position_x:
-            type: "integer"
-            format: "int64"
-            description: "max_scroll_position_x"
-            example: 0
-          max_scroll_position_y:
-            type: "integer"
-            format: "int64"
-            description: "max_scroll_position_y"
-            example: 10000
-          video_playback_position:
-            type: "integer"
-            format: "int64"
-            description: "video_playback_position"
-            example: 30
-          specified_text:
-            type: "string"
-            description: "specified_text"
-            example: null
-          specified_dom_id:
-            type: "string"
-            description: "specified_dom_id"
-            example: null
-          specified_dom_class:
-            type: "string"
-            description: "specified_dom_class"
-            example: null
-          specified_dom_tag:
-            type: "string"
-            description: "specified_dom_tag"
-            example: null
-          liked:
-            type: "boolean"
-            description: "liked"
-            example: true
-          delete_flag:
-            type: "boolean"
-            description: "削除されたかどうか。削除から30日間は復元できるようにするために保持する。"
-            example: false
-          deleted_at:
-            type: "string"
-            format: "date-time"
-            description: "deleted_at"
-            example: null
-          created_at:
-            type: "string"
-            format: "date-time"
-            description: "created_at"
-            example: "2019-05-12T20:48:24.000+09:00"
-          updated_at:
-            type: "string"
-            format: "date-time"
-            description: "updated_at"
-            example: "2019-05-12T20:48:24.000+09:00"
-        - content_id:
-            type: "integer"
-            format: "int64"
-            description: "コンテンツid"
-            example: 127
-          type:
-            type: "string"
-            description: "type"
-            example: "web"
-          title:
-            type: "string"
-            description: "title"
-            example: "面白いアイデア"
-          url:
-            type: "string"
-            description: "url"
-            example: "https://qiita.com/MasatoraAtarashi/items/eec4642fe1e6ce79304d"
-          sharing_url:
-            type: "string"
-            description: "sharing_url"
-            example: "https://universal_link.hinatasaka.com"
-          file_url:
-            type: "string"
-            description: "file_url"
-            example: null
-          thumbnail_img_url:
-            type: "string"
-            description: "サムネイル画像url"
-            example: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
-          scroll_position_x:
-            type: "integer"
-            format: "int64"
-            description: "scroll_position_x"
-            example: 0
-          scroll_position_y:
-            type: "integer"
-            format: "int64"
-            description: "scroll_position_y"
-            example: 500
-          max_scroll_position_x:
-            type: "integer"
-            format: "int64"
-            description: "max_scroll_position_x"
-            example: 0
-          max_scroll_position_y:
-            type: "integer"
-            format: "int64"
-            description: "max_scroll_position_y"
-            example: 1000
-          video_playback_position:
-            type: "integer"
-            format: "int64"
-            description: "video_playback_position"
-            example: 0
-          specified_text:
-            type: "string"
-            description: "specified_text"
-            example: null
-          specified_dom_id:
-            type: "string"
-            description: "specified_dom_id"
-            example: null
-          specified_dom_class:
-            type: "string"
-            description: "specified_dom_class"
-            example: null
-          specified_dom_tag:
-            type: "string"
-            description: "specified_dom_tag"
-            example: null
-          liked:
-            type: "boolean"
-            description: "liked"
-            example: true
-          delete_flag:
-            type: "boolean"
-            description: "削除されたかどうか。削除から30日間は復元できるようにするために保持する。"
-            example: false
-          deleted_at:
-            type: "string"
-            format: "date-time"
-            description: "deleted_at"
-            example: null
-          created_at:
-            type: "string"
-            format: "date-time"
-            description: "created_at"
-            example: "2019-05-12T20:48:24.000+09:00"
-          updated_at:
-            type: "string"
-            format: "date-time"
-            description: "updated_at"
-            example: "2019-05-12T20:48:24.000+09:00"
   Folder:
     type: "object"
     properties:
@@ -1353,7 +1165,7 @@ definitions:
         example: 10
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
-basePath: /Web-Shiori/Web-Shiori/1.0.1
+basePath: /Web-Shiori/Web-Shiori/1.0.0
 schemes:
  - https
  - http

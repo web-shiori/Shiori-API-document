@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Web-Shiori API document"
-  version: "1.0.1"
+  version: "1.0.0"
   title: "Web-Shiori API"
   contact:
     email: "shiori.web.forsafari@gmail.com"
@@ -10,7 +10,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "virtserver.swaggerhub.com"
-basePath: "/Web-Shiori/Web-Shiori/1.0.1"
+basePath: "/Web-Shiori/Web-Shiori/1.0.0"
 tags:
 - name: "auth"
   description: "認証関連API"
@@ -853,7 +853,9 @@ definitions:
         type: "object"
         properties:
           content:
-            $ref: "#/definitions/ContentList"
+            type: "array"
+            items:
+              $ref: "#/definitions/Content"
     example:
       data: "{}"
       meta:
@@ -935,19 +937,19 @@ definitions:
         file_url: "file_url"
         specified_dom_id: "specified_dom_id"
         content_id: 126
-        max_scroll_position_y: 10000
+        max_scroll_position_y: 1000
         created_at: "2019-05-12T20:48:24.000+09:00"
-        scroll_position_y: 200
+        scroll_position_y: 500
         thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
         type: "web"
-        title: "日向坂で会いましょう"
+        title: "Web-Shioriデモ動画"
         deleted_at: "2000-01-23T04:56:07.000+00:00"
-        url: "https://hinatasaka.com"
+        url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
-        video_playback_position: 500
+        video_playback_position: 50
         specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
         specified_text: "specified_text"
@@ -1033,19 +1035,19 @@ definitions:
         file_url: "file_url"
         specified_dom_id: "specified_dom_id"
         content_id: 126
-        max_scroll_position_y: 10000
+        max_scroll_position_y: 1000
         created_at: "2019-05-12T20:48:24.000+09:00"
-        scroll_position_y: 200
+        scroll_position_y: 500
         thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
         type: "web"
-        title: "日向坂で会いましょう"
+        title: "Web-Shioriデモ動画"
         deleted_at: "2000-01-23T04:56:07.000+00:00"
-        url: "https://hinatasaka.com"
+        url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
-        video_playback_position: 500
+        video_playback_position: 50
         specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
         specified_text: "specified_text"
@@ -1233,11 +1235,11 @@ definitions:
         description: "type"
       title:
         type: "string"
-        example: "日向坂で会いましょう"
+        example: "Web-Shioriデモ動画"
         description: "title"
       url:
         type: "string"
-        example: "https://hinatasaka.com"
+        example: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
         description: "url"
       sharing_url:
         type: "string"
@@ -1258,7 +1260,7 @@ definitions:
       scroll_position_y:
         type: "integer"
         format: "int64"
-        example: 200
+        example: 500
         description: "scroll_position_y"
       max_scroll_position_x:
         type: "integer"
@@ -1268,12 +1270,12 @@ definitions:
       max_scroll_position_y:
         type: "integer"
         format: "int64"
-        example: 10000
+        example: 1000
         description: "max_scroll_position_y"
       video_playback_position:
         type: "integer"
         format: "int64"
-        example: 500
+        example: 50
         description: "video_playback_position"
       specified_text:
         type: "string"
@@ -1313,28 +1315,24 @@ definitions:
       file_url: "file_url"
       specified_dom_id: "specified_dom_id"
       content_id: 126
-      max_scroll_position_y: 10000
+      max_scroll_position_y: 1000
       created_at: "2019-05-12T20:48:24.000+09:00"
-      scroll_position_y: 200
+      scroll_position_y: 500
       thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
       scroll_position_x: 0
       max_scroll_position_x: 0
       type: "web"
-      title: "日向坂で会いましょう"
+      title: "Web-Shioriデモ動画"
       deleted_at: "2000-01-23T04:56:07.000+00:00"
-      url: "https://hinatasaka.com"
+      url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
       sharing_url: "https://universal_link.hinatasaka.com"
       liked: true
-      video_playback_position: 500
+      video_playback_position: 50
       specified_dom_class: "specified_dom_class"
       updated_at: "2019-05-12T20:48:24.000+09:00"
       specified_text: "specified_text"
       delete_flag: false
       specified_dom_tag: "specified_dom_tag"
-  ContentList:
-    type: "array"
-    items:
-      example: ""
   Folder:
     type: "object"
     properties:
