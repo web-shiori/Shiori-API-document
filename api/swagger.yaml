@@ -940,6 +940,7 @@ definitions:
         max_scroll_position_y: 10000
         created_at: "2019-05-12T20:48:24.000+09:00"
         scroll_position_y: 200
+        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
         type: "web"
@@ -1037,6 +1038,7 @@ definitions:
         max_scroll_position_y: 10000
         created_at: "2019-05-12T20:48:24.000+09:00"
         scroll_position_y: 200
+        thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
         type: "web"
@@ -1246,6 +1248,10 @@ definitions:
       file_url:
         type: "string"
         description: "file_url"
+      thumbnail_img_url:
+        type: "string"
+        example: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
+        description: "サムネイル画像url"
       scroll_position_x:
         type: "integer"
         format: "int64"
@@ -1312,6 +1318,7 @@ definitions:
       max_scroll_position_y: 10000
       created_at: "2019-05-12T20:48:24.000+09:00"
       scroll_position_y: 200
+      thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
       scroll_position_x: 0
       max_scroll_position_x: 0
       type: "web"
