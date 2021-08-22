@@ -15,6 +15,12 @@
 - package.jsonをルートに配置
 - mainブランチにプッシュすると自動でデプロイされます。
 
+## ローカルで起動する
+```
+% node index.js
+```
+
+http://localhost:8080/docs を開く
 
 # 参考
 https://qiita.com/tanabee/items/e6cedfcc75a4e50e3ad2
