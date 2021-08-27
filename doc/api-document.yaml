@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "Web-Shiori API document"
-  version: 1.0.0
+  version: 1.0.1
   title: "Web-Shiori API"
   contact:
     email: "shiori.web.forsafari@gmail.com"
@@ -54,7 +54,7 @@ paths:
           "schema":
             "$ref": "#/definitions/AuthResponse"
 
-  /v1/auth/login:
+  /v1/auth/sign_in:
     post:
       tags:
         - "auth"
@@ -88,7 +88,7 @@ paths:
           "schema":
             "$ref": "#/definitions/LoginResponse"
   
-  /v1/auth/login/google:
+  /v1/auth/google_oauth2:
     get:
       tags:
         - "auth"
@@ -112,7 +112,7 @@ paths:
               type: "string"
               description: "uid"
               
-  /v1/auth/callback/google:
+  /omniauth/google_oauth2/callback:
     get:
       tags:
         - "auth"
@@ -126,7 +126,7 @@ paths:
         200:
           "description": "A successful response."
             
-  /v1/auth/login/twitter:
+  /v1/auth/twitter:
     get:
       tags:
         - "auth"
@@ -150,7 +150,7 @@ paths:
               type: "string"
               description: "uid"
             
-  /v1/auth/callback/twitter:
+  /omniauth/twitter/callback:
     get:
       tags:
         - "auth"
@@ -164,7 +164,7 @@ paths:
         200:
           "description": "A successful response."
   
-  /v1/auth/login/github:
+  /v1/auth/github:
     get:
       tags:
         - "auth"
@@ -188,7 +188,7 @@ paths:
               type: "string"
               description: "uid"
 
-  /v1/auth/callback/github:
+  /omniauth/github/callback:
     get:
       tags:
         - "auth"
@@ -234,17 +234,22 @@ paths:
           required: false
           type: "string"
         - in: "query"
-          name: "limit"
+          name: "per_page"
           description: "取得数。デフォルトは50"
           required: false
           type: "integer"
           format: "int64"
         - in: "query"
-          name: "offset"
-          description: "取得位置。デフォルトは0"
+          name: "page"
+          description: "取得位置。デフォルトは1"
           required: false
           type: "integer"
           format: "int64"
+        - in: "query"
+          name: "liked"
+          description: "お気に入り"
+          required: false
+          type: "boolean"
       responses:
         200:
           "description": "A successful response."
@@ -334,124 +339,6 @@ paths:
       tags:
         - "content"
       summary: "コンテンツ削除API"
-      description: ""
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "path"
-          name: "content_id"
-          required: true
-          type: "integer"
-        - in: "header"
-          name: "access-token"
-          description: "アクセストークン"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "client"
-          description: "client"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "uid"
-          description: "uid"
-          required: true
-          type: "string"
-      responses:
-        204:
-          "description": "A successful response."
-  
-  /v1/likes:
-    get:
-      tags:
-        - "content"
-      summary: "お気に入りコンテンツ一覧取得API"
-      description: ""
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "header"
-          name: "access-token"
-          description: "アクセストークン"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "client"
-          description: "client"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "uid"
-          description: "uid"
-          required: true
-          type: "string"
-        - in: "query"
-          name: "q"
-          description: "検索クエリ"
-          required: false
-          type: "string"
-        - in: "query"
-          name: "limit"
-          description: "取得数。デフォルトは50"
-          required: false
-          type: "integer"
-          format: "int64"
-        - in: "query"
-          name: "offset"
-          description: "取得位置。デフォルトは0"
-          required: false
-          type: "integer"
-          format: "int64"
-      responses:
-        200:
-          "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/LikedContentListResponse"
-  
-  /v1/content/{content_id}/like:
-    post:
-      tags:
-        - "content"
-      summary: "お気に入り登録API"
-      description: ""
-      consumes:
-        - "application/json"
-      produces:
-        - "application/json"
-      parameters:
-        - in: "path"
-          name: "content_id"
-          required: true
-          type: "integer"
-        - in: "header"
-          name: "access-token"
-          description: "アクセストークン"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "client"
-          description: "client"
-          required: true
-          type: "string"
-        - in: "header"
-          name: "uid"
-          description: "uid"
-          required: true
-          type: "string"
-      responses:
-        200:
-          "description": "A successful response."
-          "schema":
-            "$ref": "#/definitions/LikedResponse"
-            
-    delete:
-      tags:
-        - "content"
-      summary: "お気に入り解除API"
       description: ""
       consumes:
         - "application/json"
@@ -864,7 +751,7 @@ definitions:
   ContentUpdateRequest:
     type: "object"
     properties:
-      content_id:
+      id:
         type: "integer"
         format: "int64"
         description: "コンテンツid"
@@ -922,6 +809,10 @@ definitions:
         type: "string"
         description: "specified_dom_tag"
         example: null
+      liked:
+        type: "boolean"
+        description: "お気に入り"
+        example: true
   ContentUpdateResponse:
     type: "object"
     properties:
@@ -1002,19 +893,23 @@ definitions:
         type: "string"
         description: "検索クエリ"
         example: ""
-      limit:
+      per_page:
         type: "integer"
         format: "int64"
         description: "取得数"
         example: 50
-      offset:
+      page:
         type: "integer"
         format: "int64"
-        description: "取得位置(相対位置)"
-        example: 0
-      hasNext:
+        description: "取得位置(1から)"
+        example: 1
+      nextPage:
+        type: "integer"
+        description: "次のページ数"
+        example: 2
+      liked:
         type: "boolean"
-        description: "続きが存在するかどうか"
+        description: "お気に入りのコンテンツのみ取得しているか"
         example: true
   User:
     type: "object"
@@ -1053,12 +948,12 @@ definitions:
   Content:
     type: "object"
     properties:
-      content_id:
+      id:
         type: "integer"
         format: "int64"
         description: "コンテンツid"
         example: 126
-      type:
+      content_type:
         type: "string"
         description: "type"
         example: "web"
@@ -1149,7 +1044,7 @@ definitions:
   Folder:
     type: "object"
     properties:
-      folder_id:
+      id:
         type: "integer"
         format: "int64"
         description: "フォルダid"
@@ -1165,7 +1060,7 @@ definitions:
         example: 10
 # Added by API Auto Mocking Plugin
 host: virtserver.swaggerhub.com
-basePath: /Web-Shiori/Web-Shiori/1.0.0
+basePath: /Web-Shiori/Web-Shiori/1.0.1
 schemes:
  - https
  - http

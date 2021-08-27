@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   description: "Web-Shiori API document"
-  version: "1.0.0"
+  version: "1.0.1"
   title: "Web-Shiori API"
   contact:
     email: "shiori.web.forsafari@gmail.com"
@@ -10,7 +10,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "virtserver.swaggerhub.com"
-basePath: "/Web-Shiori/Web-Shiori/1.0.0"
+basePath: "/Web-Shiori/Web-Shiori/1.0.1"
 tags:
 - name: "auth"
   description: "認証関連API"
@@ -57,13 +57,13 @@ paths:
           schema:
             $ref: "#/definitions/AuthResponse"
       x-swagger-router-controller: "Auth"
-  /v1/auth/login:
+  /v1/auth/sign_in:
     post:
       tags:
       - "auth"
       summary: "ログイン用API"
       description: "ログインします。\n email, passwordをリクエストで受け取り、ユーザと認証用のトークンを生成します。"
-      operationId: "v1AuthLoginPOST"
+      operationId: "v1AuthSign_inPOST"
       consumes:
       - "application/json"
       produces:
@@ -91,13 +91,13 @@ paths:
           schema:
             $ref: "#/definitions/LoginResponse"
       x-swagger-router-controller: "Auth"
-  /v1/auth/login/google:
+  /v1/auth/google_oauth2:
     get:
       tags:
       - "auth"
       summary: "Googleログイン用API"
       description: ""
-      operationId: "v1AuthLoginGoogleGET"
+      operationId: "v1AuthGoogle_oauth2GET"
       consumes:
       - "application/json"
       produces:
@@ -117,13 +117,13 @@ paths:
               type: "string"
               description: "uid"
       x-swagger-router-controller: "Auth"
-  /v1/auth/callback/google:
+  /omniauth/google_oauth2/callback:
     get:
       tags:
       - "auth"
       summary: "Googleの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackGoogleGET"
+      operationId: "omniauthGoogle_oauth2CallbackGET"
       consumes:
       - "application/json"
       produces:
@@ -133,13 +133,13 @@ paths:
         "200":
           description: "A successful response."
       x-swagger-router-controller: "Auth"
-  /v1/auth/login/twitter:
+  /v1/auth/twitter:
     get:
       tags:
       - "auth"
       summary: "Twitterログイン用API"
       description: ""
-      operationId: "v1AuthLoginTwitterGET"
+      operationId: "v1AuthTwitterGET"
       consumes:
       - "application/json"
       produces:
@@ -159,13 +159,13 @@ paths:
               type: "string"
               description: "uid"
       x-swagger-router-controller: "Auth"
-  /v1/auth/callback/twitter:
+  /omniauth/twitter/callback:
     get:
       tags:
       - "auth"
       summary: "Twitterの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackTwitterGET"
+      operationId: "omniauthTwitterCallbackGET"
       consumes:
       - "application/json"
       produces:
@@ -175,13 +175,13 @@ paths:
         "200":
           description: "A successful response."
       x-swagger-router-controller: "Auth"
-  /v1/auth/login/github:
+  /v1/auth/github:
     get:
       tags:
       - "auth"
       summary: "Githubログイン用API"
       description: ""
-      operationId: "v1AuthLoginGithubGET"
+      operationId: "v1AuthGithubGET"
       consumes:
       - "application/json"
       produces:
@@ -201,13 +201,13 @@ paths:
               type: "string"
               description: "uid"
       x-swagger-router-controller: "Auth"
-  /v1/auth/callback/github:
+  /omniauth/github/callback:
     get:
       tags:
       - "auth"
       summary: "Githubの認証が終わった際にリダイレクトされてくるAPI"
       description: "クライアントが直接叩くことはない"
-      operationId: "v1AuthCallbackGithubGET"
+      operationId: "omniauthGithubCallbackGET"
       consumes:
       - "application/json"
       produces:
@@ -249,18 +249,23 @@ paths:
         description: "検索クエリ"
         required: false
         type: "string"
-      - name: "limit"
+      - name: "per_page"
         in: "query"
         description: "取得数。デフォルトは50"
         required: false
         type: "integer"
         format: "int64"
-      - name: "offset"
+      - name: "page"
         in: "query"
-        description: "取得位置。デフォルトは0"
+        description: "取得位置。デフォルトは1"
         required: false
         type: "integer"
         format: "int64"
+      - name: "liked"
+        in: "query"
+        description: "お気に入り"
+        required: false
+        type: "boolean"
       responses:
         "200":
           description: "A successful response."
@@ -354,127 +359,6 @@ paths:
       summary: "コンテンツ削除API"
       description: ""
       operationId: "v1ContentContent_idDELETE"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      responses:
-        "204":
-          description: "A successful response."
-      x-swagger-router-controller: "Content"
-  /v1/likes:
-    get:
-      tags:
-      - "content"
-      summary: "お気に入りコンテンツ一覧取得API"
-      description: ""
-      operationId: "v1LikesGET"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      - name: "q"
-        in: "query"
-        description: "検索クエリ"
-        required: false
-        type: "string"
-      - name: "limit"
-        in: "query"
-        description: "取得数。デフォルトは50"
-        required: false
-        type: "integer"
-        format: "int64"
-      - name: "offset"
-        in: "query"
-        description: "取得位置。デフォルトは0"
-        required: false
-        type: "integer"
-        format: "int64"
-      responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/LikedContentListResponse"
-      x-swagger-router-controller: "Content"
-  /v1/content/{content_id}/like:
-    post:
-      tags:
-      - "content"
-      summary: "お気に入り登録API"
-      description: ""
-      operationId: "v1ContentContent_idLikePOST"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "content_id"
-        in: "path"
-        required: true
-        type: "integer"
-      - name: "access-token"
-        in: "header"
-        description: "アクセストークン"
-        required: true
-        type: "string"
-      - name: "client"
-        in: "header"
-        description: "client"
-        required: true
-        type: "string"
-      - name: "uid"
-        in: "header"
-        description: "uid"
-        required: true
-        type: "string"
-      responses:
-        "200":
-          description: "A successful response."
-          schema:
-            $ref: "#/definitions/LikedResponse"
-      x-swagger-router-controller: "Content"
-    delete:
-      tags:
-      - "content"
-      summary: "お気に入り解除API"
-      description: ""
-      operationId: "v1ContentContent_idLikeDELETE"
       consumes:
       - "application/json"
       produces:
@@ -860,9 +744,10 @@ definitions:
       data: "{}"
       meta:
         q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
+        per_page: 50
+        nextPage: 2
+        page: 1
+        liked: true
   ContentCreateRequest:
     type: "object"
     properties:
@@ -936,29 +821,29 @@ definitions:
       data:
         file_url: "file_url"
         specified_dom_id: "specified_dom_id"
-        content_id: 126
         max_scroll_position_y: 1000
         created_at: "2019-05-12T20:48:24.000+09:00"
         scroll_position_y: 500
         thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
-        type: "web"
         title: "Web-Shioriデモ動画"
         deleted_at: "2000-01-23T04:56:07.000+00:00"
         url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
         video_playback_position: 50
+        content_type: "web"
         specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
         specified_text: "specified_text"
+        id: 126
         delete_flag: false
         specified_dom_tag: "specified_dom_tag"
   ContentUpdateRequest:
     type: "object"
     properties:
-      content_id:
+      id:
         type: "integer"
         format: "int64"
         example: 126
@@ -1011,19 +896,24 @@ definitions:
       specified_dom_tag:
         type: "string"
         description: "specified_dom_tag"
+      liked:
+        type: "boolean"
+        example: true
+        description: "お気に入り"
     example:
       specified_dom_id: "specified_dom_id"
-      content_id: 126
       max_scroll_position_y: 10000
       scroll_position_y: 200
       scroll_position_x: 0
       max_scroll_position_x: 0
       title: "日向坂で会いましょう"
       url: "https://hinatasaka.com"
+      liked: true
       video_playback_position: 500
       file: "file"
       specified_dom_class: "specified_dom_class"
       specified_text: "specified_text"
+      id: 126
       specified_dom_tag: "specified_dom_tag"
   ContentUpdateResponse:
     type: "object"
@@ -1034,23 +924,23 @@ definitions:
       data:
         file_url: "file_url"
         specified_dom_id: "specified_dom_id"
-        content_id: 126
         max_scroll_position_y: 1000
         created_at: "2019-05-12T20:48:24.000+09:00"
         scroll_position_y: 500
         thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
         scroll_position_x: 0
         max_scroll_position_x: 0
-        type: "web"
         title: "Web-Shioriデモ動画"
         deleted_at: "2000-01-23T04:56:07.000+00:00"
         url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
         sharing_url: "https://universal_link.hinatasaka.com"
         liked: true
         video_playback_position: 50
+        content_type: "web"
         specified_dom_class: "specified_dom_class"
         updated_at: "2019-05-12T20:48:24.000+09:00"
         specified_text: "specified_text"
+        id: 126
         delete_flag: false
         specified_dom_tag: "specified_dom_tag"
   LikedContentListResponse:
@@ -1065,13 +955,6 @@ definitions:
             type: "array"
             items:
               $ref: "#/definitions/Content"
-    example:
-      data: "{}"
-      meta:
-        q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
   LikedResponse:
     type: "object"
     properties:
@@ -1082,8 +965,6 @@ definitions:
             type: "boolean"
             example: true
             description: "liked"
-    example:
-      data: "{}"
   FolderListResponse:
     type: "object"
     properties:
@@ -1114,9 +995,10 @@ definitions:
       data: "{}"
       meta:
         q: ""
-        offset: 0
-        limit: 50
-        hasNext: true
+        per_page: 50
+        nextPage: 2
+        page: 1
+        liked: true
   FolderCreateRequest:
     type: "object"
     properties:
@@ -1133,7 +1015,7 @@ definitions:
     example:
       data:
         name: "動画"
-        folder_id: 1
+        id: 1
         content_count: 10
   FolderUpdateRequest:
     type: "object"
@@ -1151,7 +1033,7 @@ definitions:
     example:
       data:
         name: "動画"
-        folder_id: 1
+        id: 1
         content_count: 10
   MetaData:
     type: "object"
@@ -1160,25 +1042,30 @@ definitions:
         type: "string"
         example: ""
         description: "検索クエリ"
-      limit:
+      per_page:
         type: "integer"
         format: "int64"
         example: 50
         description: "取得数"
-      offset:
+      page:
         type: "integer"
         format: "int64"
-        example: 0
-        description: "取得位置(相対位置)"
-      hasNext:
+        example: 1
+        description: "取得位置(1から)"
+      nextPage:
+        type: "integer"
+        example: 2
+        description: "次のページ数"
+      liked:
         type: "boolean"
         example: true
-        description: "続きが存在するかどうか"
+        description: "お気に入りのコンテンツのみ取得しているか"
     example:
       q: ""
-      offset: 0
-      limit: 50
-      hasNext: true
+      per_page: 50
+      nextPage: 2
+      page: 1
+      liked: true
   User:
     type: "object"
     properties:
@@ -1224,12 +1111,12 @@ definitions:
   Content:
     type: "object"
     properties:
-      content_id:
+      id:
         type: "integer"
         format: "int64"
         example: 126
         description: "コンテンツid"
-      type:
+      content_type:
         type: "string"
         example: "web"
         description: "type"
@@ -1314,29 +1201,29 @@ definitions:
     example:
       file_url: "file_url"
       specified_dom_id: "specified_dom_id"
-      content_id: 126
       max_scroll_position_y: 1000
       created_at: "2019-05-12T20:48:24.000+09:00"
       scroll_position_y: 500
       thumbnail_img_url: "https://i.ytimg.com/vi/xP_Ovd8-GM8/maxresdefault.jpg"
       scroll_position_x: 0
       max_scroll_position_x: 0
-      type: "web"
       title: "Web-Shioriデモ動画"
       deleted_at: "2000-01-23T04:56:07.000+00:00"
       url: "https://www.youtube.com/watch?v=1DcjMwkmNvA"
       sharing_url: "https://universal_link.hinatasaka.com"
       liked: true
       video_playback_position: 50
+      content_type: "web"
       specified_dom_class: "specified_dom_class"
       updated_at: "2019-05-12T20:48:24.000+09:00"
       specified_text: "specified_text"
+      id: 126
       delete_flag: false
       specified_dom_tag: "specified_dom_tag"
   Folder:
     type: "object"
     properties:
-      folder_id:
+      id:
         type: "integer"
         format: "int64"
         example: 1
@@ -1352,5 +1239,5 @@ definitions:
         description: "フォルダに含まれているコンテンツの数"
     example:
       name: "動画"
-      folder_id: 1
+      id: 1
       content_count: 10
